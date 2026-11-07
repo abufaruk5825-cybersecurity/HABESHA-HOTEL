@@ -4,7 +4,7 @@ Enterprise-grade, fullstack Smart Hotel Management System featuring a luxury pub
 
 
 
-## 1. Project Overview
+ # 1. Project Overview
 
 **HABESHA-HOTEL SHMS** is a real-world, production-oriented hotel hospitality platform designed for modern boutique and luxury hotel chains. It delivers end-to-end automation of hotel operations—from public availability search, dynamic room pricing, and double-booking prevention to front-desk check-in, keycard management, urgent housekeeping turnovers, maintenance ticketing, and financial folios.
 
@@ -16,9 +16,9 @@ Enterprise-grade, fullstack Smart Hotel Management System featuring a luxury pub
 
 
 
-## 2. Key Features by Role
+  # 2. Key Features by Role
 
-### A. Public Guest Portal & Hotel Website
+  # A. Public Guest Portal & Hotel Website
  **Availability Search Engine**: Real-time room availability calculation taking into account conflicting date overlaps, room operational readiness, and guest capacity.
  **Accommodations Showcase**: Room type catalog spanning Standard Rooms, Deluxe Kings, Executive Club Quarters, and Presidential Suites with high-resolution imagery and specifications.
  **Multi-Step Booking Flow**:
@@ -30,7 +30,7 @@ Enterprise-grade, fullstack Smart Hotel Management System featuring a luxury pub
  **Verified Patron Reviews**: Real guest reviews with 5-star ratings and verified stay badges, plus interactive review submission.
  **Concierge Desk**: Interactive inquiry form and interactive FAQ accordion.
 
-### B. Administrator Dashboard (`/admin`)
+   # B. Administrator Dashboard (`/admin`)
  **Executive Analytics**: Real-time KPIs calculated from the database—Settled Revenue, Outstanding Balances, Average Daily Rate (ADR), Revenue Per Available Room (RevPAR), Occupancy %, and Active Stays.
  **Room Management**: Add rooms, update floor assignments, configure night prices, and override operational statuses.
  **Reservation Ledger**: Complete booking audit with filters by status, guest search, date ranges, and folio inspection.
@@ -39,27 +39,30 @@ Enterprise-grade, fullstack Smart Hotel Management System featuring a luxury pub
  **Global Settings & Policies**: Live adjustment of hotel brand name, tax rate (%), currency symbol, cancellation policies, and standard check-in/out hours.
  **Business Data Export**: Instant one-click CSV export for all bookings, payments, and room states.
 
-### C. Hotel Manager Dashboard (`/manager`)
+   # C. Hotel Manager Dashboard (`/manager`)
+
  **Daily Operations Pulse**: Real-time monitor for clean rooms, in-house guests, dirty rooms, maintenance faults, and guest requests.
  **Room Readiness Board**: Visual matrix separating booking reservation state from physical operational readiness.
  **Housekeeping Coordination**: Schedule and assign room turns to housekeeping specialists with urgency flags.
  **Maintenance & Engineering**: Log damaged fixtures, assign technicians, track repair costs, resolve faults, and release rooms safely back into service.
  **Guest Inquiries & Recovery**: Review guest complaints, assign responsible departments, and record resolution notes.
 
-### D. Receptionist Dashboard (`/reception`)
+   # D. Receptionist Dashboard (`/reception`)
+
  **Today's Expected Arrivals**: 1-click guest check-in (validates room cleanliness, marks booking `checked_in`, sets room to `occupied`, logs receptionist).
  **Today's Expected Departures**: 1-click checkout (tallies final charges, prints receipt, sets booking `checked_out`, sets room to `dirty`, and automatically dispatches an urgent Housekeeping clean task).
  **Walk-In Registration Desk**: Rapidly register unbooked walk-in travelers, assign an available clean room, collect deposit, and issue keycards immediately.
  **Interactive 18-Room Board**: Live visual matrix across all 5 hotel floors with colored status badges (Available, Occupied, Reserved, Dirty, Maintenance).
  **Payment Collection**: Record partial or full payments in Cash, Card, or Wire Transfer.
 
-### E. Housekeeping Dashboard (`/housekeeping`)
+  # E. Housekeeping Dashboard (`/housekeeping`)
  **Cleaning Priority Queue**: Prioritizes urgent checkout rooms to prepare for incoming same-day arrivals.
  **Status Workflow**: Instant toggles (`Start Cleaning` -> `Mark Clean & Ready`).
  **Defect Reporting**: Direct 1-click maintenance reporting from any room (e.g. AC faults, plumbing leaks).
  **Sanitation Matrix**: Floor-by-floor view of clean vs. dirty rooms.
 
-### F. Guest Portal (`/customer`)
+   # F. Guest Portal (`/customer`)
+
  **Active Reservations**: View upcoming stay details, room numbers, and dates.
  **In-Room Dining & Amenities Order**: Request breakfast, champagne, or spa appointments directly to the active room.
  **Printable Invoices & Receipts**: Download and print itemized official tax folios.
@@ -67,7 +70,7 @@ Enterprise-grade, fullstack Smart Hotel Management System featuring a luxury pub
  **Concierge Requests**: Request hypoallergenic bedding, late check-out, or transit assistance.
 
 
-## 3. Relational Database Design (26 Tables)
+  # 3. Relational Database Design (26 Tables)
 
 The database schema is fully normalized with foreign keys, checks, timestamps, and indexes:
 
@@ -100,7 +103,7 @@ The database schema is fully normalized with foreign keys, checks, timestamps, a
 
 
 
-## 4. Default Demonstration Accounts
+ # 4. Default Demonstration Accounts
 
 The system includes pre-seeded demonstration accounts with instant 1-click switching from the top navigation bar:
 
@@ -116,7 +119,7 @@ The system includes pre-seeded demonstration accounts with instant 1-click switc
 
 
 
-## 5. Development & Running Commands
+  # 5. Development & Running Commands
 
 ```bash
 # Install dependencies
