@@ -1,0 +1,6 @@
+{
+  "name": "HABESHA-HOTEL - Smart Hotel Management System (SHMS)",
+  "description": "HABESHA-HOTEL - Enterprise-grade Smart Hotel Management System featuring a luxury public guest portal and 5 role-based dashboards for Admin, Manager, Receptionist, Housekeeping, and Guests.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

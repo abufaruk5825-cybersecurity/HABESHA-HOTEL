@@ -1,0 +1,266 @@
+@import "tailwindcss";
+
+@layer base {
+  html, body {
+    font-family: 'Inter', 'Noto Sans Ethiopic', system-ui, -apple-system, sans-serif;
+  }
+  [lang="am"] {
+    font-family: 'Noto Sans Ethiopic', 'Inter', sans-serif;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HABESHA-HOTEL DASHBOARD THEME SYSTEM (ONLY APPLIED TO DASHBOARDS)
+   Public website pages ALWAYS maintain their original luxury dark styling.
+   Only .dashboard-scope in light mode receives the clean modern light theme.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.dashboard-scope.theme-light {
+  color-scheme: light;
+}
+
+/* Smooth transitions inside dashboard */
+.dashboard-scope,
+.dashboard-scope * {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease;
+}
+
+/* Dashboard Base Backgrounds */
+.dashboard-scope.theme-light,
+.dashboard-scope.theme-light .bg-slate-950,
+.dashboard-scope.theme-light main.bg-slate-950 {
+  background-color: #f8fafc !important; /* crisp slate-50 */
+  color: #0f172a !important;
+}
+
+/* Sidebars & primary card surfaces */
+.dashboard-scope.theme-light aside,
+.dashboard-scope.theme-light .bg-slate-900 {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+}
+
+.dashboard-scope.theme-light .bg-slate-900\/90,
+.dashboard-scope.theme-light .bg-slate-900\/80,
+.dashboard-scope.theme-light .bg-slate-900\/70,
+.dashboard-scope.theme-light .bg-slate-900\/60 {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+}
+
+/* Top header and nested panel surfaces */
+.dashboard-scope.theme-light header,
+.dashboard-scope.theme-light .bg-slate-950\/70,
+.dashboard-scope.theme-light .bg-slate-950\/60,
+.dashboard-scope.theme-light .bg-slate-950\/40 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+.dashboard-scope.theme-light header.bg-slate-900\/70 {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.dashboard-scope.theme-light .bg-slate-800 {
+  background-color: #f1f5f9 !important;
+}
+
+.dashboard-scope.theme-light .bg-slate-800\/40,
+.dashboard-scope.theme-light .bg-slate-800\/60,
+.dashboard-scope.theme-light .bg-slate-800\/80 {
+  background-color: #f8fafc !important;
+}
+
+/* Borders & dividers */
+.dashboard-scope.theme-light .border-slate-800,
+.dashboard-scope.theme-light .border-slate-800\/60,
+.dashboard-scope.theme-light .border-slate-800\/80,
+.dashboard-scope.theme-light .border-slate-800\/90,
+.dashboard-scope.theme-light .border-slate-700,
+.dashboard-scope.theme-light .border-slate-700\/40,
+.dashboard-scope.theme-light .border-slate-700\/60 {
+  border-color: #e2e8f0 !important; /* slate-200 */
+}
+
+.dashboard-scope.theme-light .divide-slate-800,
+.dashboard-scope.theme-light .divide-slate-800\/60,
+.dashboard-scope.theme-light .divide-slate-800\/80 {
+  border-color: #e2e8f0 !important;
+}
+
+/* Typography & Headings */
+.dashboard-scope.theme-light .text-white,
+.dashboard-scope.theme-light .text-slate-100 {
+  color: #0f172a !important; /* slate-900 */
+}
+
+.dashboard-scope.theme-light .text-slate-200 {
+  color: #1e293b !important; /* slate-800 */
+}
+
+.dashboard-scope.theme-light .text-slate-300 {
+  color: #334155 !important; /* slate-700 */
+}
+
+.dashboard-scope.theme-light .text-slate-400 {
+  color: #64748b !important; /* slate-500 */
+}
+
+.dashboard-scope.theme-light .text-slate-500 {
+  color: #64748b !important; /* slate-500 */
+}
+
+.dashboard-scope.theme-light .text-slate-600 {
+  color: #475569 !important;
+}
+
+/* Amber / Gold luxury accents */
+.dashboard-scope.theme-light .text-amber-400 {
+  color: #d97706 !important; /* amber-600 */
+}
+.dashboard-scope.theme-light .text-amber-300 {
+  color: #b45309 !important; /* amber-700 */
+}
+.dashboard-scope.theme-light .bg-amber-500\/10,
+.dashboard-scope.theme-light .bg-amber-500\/15,
+.dashboard-scope.theme-light .bg-amber-500\/20 {
+  background-color: #fef3c7 !important; /* amber-100 */
+  color: #92400e !important; /* amber-800 */
+}
+.dashboard-scope.theme-light .border-amber-500\/20,
+.dashboard-scope.theme-light .border-amber-500\/30,
+.dashboard-scope.theme-light .border-amber-500\/40 {
+  border-color: #fde68a !important; /* amber-200 */
+}
+
+/* Status badges */
+.dashboard-scope.theme-light .bg-emerald-500\/15,
+.dashboard-scope.theme-light .bg-emerald-500\/20 {
+  background-color: #ecfdf5 !important;
+  color: #047857 !important;
+}
+.dashboard-scope.theme-light .text-emerald-300,
+.dashboard-scope.theme-light .text-emerald-400 {
+  color: #059669 !important;
+}
+.dashboard-scope.theme-light .border-emerald-500\/30 {
+  border-color: #a7f3d0 !important;
+}
+
+.dashboard-scope.theme-light .bg-rose-500\/10,
+.dashboard-scope.theme-light .bg-rose-500\/15,
+.dashboard-scope.theme-light .bg-rose-500\/20 {
+  background-color: #fff1f2 !important;
+  color: #be123c !important;
+}
+.dashboard-scope.theme-light .text-rose-300,
+.dashboard-scope.theme-light .text-rose-400 {
+  color: #e11d48 !important;
+}
+.dashboard-scope.theme-light .border-rose-500\/20,
+.dashboard-scope.theme-light .border-rose-500\/30,
+.dashboard-scope.theme-light .border-rose-500\/40 {
+  border-color: #fecdd3 !important;
+}
+
+.dashboard-scope.theme-light .bg-blue-500\/15,
+.dashboard-scope.theme-light .bg-blue-500\/20,
+.dashboard-scope.theme-light .bg-blue-950\/40 {
+  background-color: #eff6ff !important;
+  color: #1d4ed8 !important;
+}
+.dashboard-scope.theme-light .text-blue-300,
+.dashboard-scope.theme-light .text-blue-400 {
+  color: #1d4ed8 !important;
+}
+.dashboard-scope.theme-light .border-blue-500\/30,
+.dashboard-scope.theme-light .border-blue-800\/80 {
+  border-color: #bfdbfe !important;
+}
+
+.dashboard-scope.theme-light .bg-purple-500\/15,
+.dashboard-scope.theme-light .bg-purple-500\/20 {
+  background-color: #faf5ff !important;
+  color: #7e22ce !important;
+}
+.dashboard-scope.theme-light .text-purple-300,
+.dashboard-scope.theme-light .text-purple-400 {
+  color: #7e22ce !important;
+}
+
+.dashboard-scope.theme-light .bg-orange-500\/15,
+.dashboard-scope.theme-light .bg-orange-500\/20 {
+  background-color: #fff7ed !important;
+  color: #c2410c !important;
+}
+.dashboard-scope.theme-light .text-orange-300,
+.dashboard-scope.theme-light .text-orange-400 {
+  color: #c2410c !important;
+}
+
+.dashboard-scope.theme-light .bg-sky-500\/10,
+.dashboard-scope.theme-light .bg-sky-500\/15,
+.dashboard-scope.theme-light .bg-sky-500\/20 {
+  background-color: #f0f9ff !important;
+  color: #0369a1 !important;
+}
+.dashboard-scope.theme-light .text-sky-300,
+.dashboard-scope.theme-light .text-sky-400 {
+  color: #0284c7 !important;
+}
+
+/* Form controls */
+.dashboard-scope.theme-light input:not([type="checkbox"]):not([type="radio"]),
+.dashboard-scope.theme-light select,
+.dashboard-scope.theme-light textarea {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+.dashboard-scope.theme-light input::placeholder,
+.dashboard-scope.theme-light textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+.dashboard-scope.theme-light input:focus,
+.dashboard-scope.theme-light select:focus,
+.dashboard-scope.theme-light textarea:focus {
+  border-color: #f59e0b !important;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2) !important;
+}
+
+/* Tables in light mode */
+.dashboard-scope.theme-light thead.bg-slate-950,
+.dashboard-scope.theme-light thead tr {
+  background-color: #f1f5f9 !important;
+  color: #475569 !important;
+}
+
+.dashboard-scope.theme-light tbody tr:hover {
+  background-color: #f8fafc !important;
+}
+
+/* Modals & Dropdowns in light mode */
+.dashboard-scope.theme-light .bg-black\/70,
+.dashboard-scope.theme-light .bg-black\/60 {
+  background-color: rgba(15, 23, 42, 0.5) !important;
+}
+
+.dashboard-scope.theme-light .shadow-xl,
+.dashboard-scope.theme-light .shadow-2xl,
+.dashboard-scope.theme-light .shadow-md {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.02) !important;
+}
+
+/* Secondary & action buttons */
+.dashboard-scope.theme-light .bg-slate-800:not(.bg-amber-500) {
+  background-color: #f1f5f9 !important;
+  color: #334155 !important;
+  border-color: #cbd5e1 !important;
+}
+
+.dashboard-scope.theme-light .hover\:bg-slate-700:hover,
+.dashboard-scope.theme-light .hover\:bg-slate-800:hover {
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
