@@ -1,11 +1,11 @@
 # HABESHA-HOTEL SHMS - API Reference
 
-## Base URL
+# Base URL
 `/api`
 
 ## Core Endpoints
 
-### Authentication
+# Authentication
 - `POST /api/auth/login` - User authentication
 - `POST /api/auth/register` - Guest registration
 - `GET /api/auth/me` - Current session user profile
