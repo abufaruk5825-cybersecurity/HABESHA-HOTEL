@@ -1,152 +1,123 @@
 # HABESHA-HOTEL - Smart Hotel Management System (SHMS)
 
-Enterprise-grade, fullstack Smart Hotel Management System featuring a luxury public guest booking portal and five dedicated role-based operational dashboards for Administrators, Hotel Managers, Receptionists, Housekeeping Staff, and Guests.
+Enterprise-grade, fullstack Smart Hotel Management System featuring a luxury public guest booking portal and eight dedicated role-based operational dashboards for Super Administrators, Administrators, Hotel Managers, Receptionists, Accountants, Housekeeping Staff, Maintenance Technicians, and Guests.
 
+---
 
+## 1. Project Overview
 
- # 1. Project Overview
+**HABESHA-HOTEL SHMS** is a real-world, production-oriented hotel hospitality platform engineered specifically for Habesha Hotel located in Bole Sub-City, Africa Avenue, Addis Ababa, Ethiopia. It delivers end-to-end automation of hotel operations—from online room availability searching, dynamic room pricing, and double-booking prevention to front-desk check-in, keycard management, urgent housekeeping turnovers, maintenance ticketing, and financial folios.
 
-**HABESHA-HOTEL SHMS** is a real-world, production-oriented hotel hospitality platform designed for modern boutique and luxury hotel chains. It delivers end-to-end automation of hotel operations—from public availability search, dynamic room pricing, and double-booking prevention to front-desk check-in, keycard management, urgent housekeeping turnovers, maintenance ticketing, and financial folios.
+- **Frontend**: React 19, TypeScript, Tailwind CSS, Lucide Icons, Vite
+- **Backend**: Node.js, Express.js RESTful API, TypeScript runtime (`tsx`)
+- **Database**: Relational Database Engine (MySQL 8.0 with connection pooling, ACID transactions, and foreign key enforcement)
+- **Authentication**: JWT (JSON Web Tokens) with secure HTTP-only cookies and Bearer Authorization headers
+- **Architecture**: Decoupled MVC / Controller-Service-Repository architecture with automated Audit Logging and Role-Based Access Control (RBAC)
+- **Internationalization (i18n)**: Instantaneous, bidirectional translation between English and Amharic (አማርኛ)
 
- **Frontend**: React 19, TypeScript, Tailwind CSS, Lucide Icons, Vite
- **Backend**: Node.js, Express.js RESTful API, TypeScript (`tsx`)
- **Database**: Relational Database Engine (`better-sqlite3` with ACID transactions, Write-Ahead Logging, and foreign key enforcement)
- **Authentication**: JWT (JSON Web Tokens) with secure HTTP-only cookies and Bearer Authorization headers
- **Architecture**: Decoupled MVC / Controller-Service-Repository architecture with Audit Logging and Role-Based Access Control (RBAC)
+---
 
+## 2. Comprehensive Documentation Suite
 
+Complete, professional, university-grade documentation is located in the [**`docs/`**](./docs/) directory:
 
-  # 2. Key Features by Role
+| Document | File Path | Scope & Focus |
+|---|---|---|
+| **Complete Project Report** | [`docs/PROJECT_REPORT.md`](./docs/PROJECT_REPORT.md) | Six-chapter formal thesis: Introduction, System Analysis, System Design, Implementation, Testing & Test Cases, Conclusion & Recommendations. |
+| **Software Requirements Specification** | [`docs/SRS.md`](./docs/SRS.md) | Complete functional and non-functional requirements, user class matrices, and hardware/software specifications. |
+| **Software Design Document** | [`docs/SDD.md`](./docs/SDD.md) | Three-tier architecture, component decomposition, database transactions, and scoped theme isolation. |
+| **Database Documentation** | [`docs/DATABASE_DOCUMENTATION.md`](./docs/DATABASE_DOCUMENTATION.md) | 27 normalized relational tables (3NF), data dictionary, ERD, foreign key cascades, and indexes. |
+| **REST API Reference** | [`docs/API_DOCUMENTATION.md`](./docs/API_DOCUMENTATION.md) | Complete endpoint catalog, methods, headers, request bodies, query parameters, and JSON responses. |
+| **User Manual** | [`docs/USER_MANUAL.md`](./docs/USER_MANUAL.md) | Step-by-step operational workflows for Guests, Receptionists, Housekeeping, Maintenance, Accountants, and Managers. |
+| **Administrator & Super Admin Manual** | [`docs/ADMINISTRATOR_MANUAL.md`](./docs/ADMINISTRATOR_MANUAL.md) | User account lifecycle, RBAC permissions matrix, branch governance, global settings, and immutable audit logs. |
+| **Developer & Setup Guide** | [`docs/DEVELOPER_INSTALLATION_GUIDE.md`](./docs/DEVELOPER_INSTALLATION_GUIDE.md) | Prerequisites, environment setup, MySQL configuration, testing, and troubleshooting. |
 
-  # A. Public Guest Portal & Hotel Website
- **Availability Search Engine**: Real-time room availability calculation taking into account conflicting date overlaps, room operational readiness, and guest capacity.
- **Accommodations Showcase**: Room type catalog spanning Standard Rooms, Deluxe Kings, Executive Club Quarters, and Presidential Suites with high-resolution imagery and specifications.
- **Multi-Step Booking Flow**:
-  1. Live date range & room selection with automatic tax calculation.
-  2. Signature luxury add-ons (Breakfast Buffet, Mercedes Airport Chauffeur, Swedish Spa, In-Room Candlelit Dining).
-  3. Guest legal credentials and special preferences.
-  4. Instant booking confirmation reference (`AG-YYYY-XXXX`) and printable invoice folio.
- **Hotel Amenities & Gastronomy**: Showcases Michelin-inspired dining, thermal baths, diplomatic boardrooms, and 24/7 concierge.
- **Verified Patron Reviews**: Real guest reviews with 5-star ratings and verified stay badges, plus interactive review submission.
- **Concierge Desk**: Interactive inquiry form and interactive FAQ accordion.
+---
 
-   # B. Administrator Dashboard (`/admin`)
- **Executive Analytics**: Real-time KPIs calculated from the database—Settled Revenue, Outstanding Balances, Average Daily Rate (ADR), Revenue Per Available Room (RevPAR), Occupancy %, and Active Stays.
- **Room Management**: Add rooms, update floor assignments, configure night prices, and override operational statuses.
- **Reservation Ledger**: Complete booking audit with filters by status, guest search, date ranges, and folio inspection.
- **Financial Folios & Payments**: Track cash, card, and wire transfer payments; inspect invoices and download printable receipts.
- **User & Staff Directory**: Create staff credentials, manage roles, departments, salaries, and account activation states.
- **Global Settings & Policies**: Live adjustment of hotel brand name, tax rate (%), currency symbol, cancellation policies, and standard check-in/out hours.
- **Business Data Export**: Instant one-click CSV export for all bookings, payments, and room states.
+## 3. Operational Roles & Pre-Seeded Accounts
 
-   # C. Hotel Manager Dashboard (`/manager`)
+The system includes pre-seeded accounts representing all eight operational roles:
 
- **Daily Operations Pulse**: Real-time monitor for clean rooms, in-house guests, dirty rooms, maintenance faults, and guest requests.
- **Room Readiness Board**: Visual matrix separating booking reservation state from physical operational readiness.
- **Housekeeping Coordination**: Schedule and assign room turns to housekeeping specialists with urgency flags.
- **Maintenance & Engineering**: Log damaged fixtures, assign technicians, track repair costs, resolve faults, and release rooms safely back into service.
- **Guest Inquiries & Recovery**: Review guest complaints, assign responsible departments, and record resolution notes.
+| Role | Name | Email | Password |
+|---|---|---|---|
+| **Super Administrator** | Dawit Hailemariam | `superadmin@habeshahotel.com` | `SuperAdmin123!` |
+| **Administrator** | Selam Tesfaye | `admin@habeshahotel.com` | `Admin123!` |
+| **Hotel Manager** | Bilal Ahmed | `manager@habeshahotel.com` | `Manager123!` |
+| **Receptionist** | Firdews Mohammed | `reception@habeshahotel.com` | `Reception123!` |
+| **Accountant** | Mahlet Kebede | `accountant@habeshahotel.com` | `Accountant123!` |
+| **Housekeeper** | Hiwot Tadesse | `housekeeping@habeshahotel.com` | `Clean123!` |
+| **Maintenance** | Sumeya Ahmed | `maintenance@habeshahotel.com` | `Maintenance123!` |
+| **Guest / Customer** | Murad Kassim | `guest@habeshahotel.com` | `Guest123!` |
 
-   # D. Receptionist Dashboard (`/reception`)
+---
 
- **Today's Expected Arrivals**: 1-click guest check-in (validates room cleanliness, marks booking `checked_in`, sets room to `occupied`, logs receptionist).
- **Today's Expected Departures**: 1-click checkout (tallies final charges, prints receipt, sets booking `checked_out`, sets room to `dirty`, and automatically dispatches an urgent Housekeeping clean task).
- **Walk-In Registration Desk**: Rapidly register unbooked walk-in travelers, assign an available clean room, collect deposit, and issue keycards immediately.
- **Interactive 18-Room Board**: Live visual matrix across all 5 hotel floors with colored status badges (Available, Occupied, Reserved, Dirty, Maintenance).
- **Payment Collection**: Record partial or full payments in Cash, Card, or Wire Transfer.
+## 4. Normalized 27-Table MySQL Database Schema
 
-  # E. Housekeeping Dashboard (`/housekeeping`)
- **Cleaning Priority Queue**: Prioritizes urgent checkout rooms to prepare for incoming same-day arrivals.
- **Status Workflow**: Instant toggles (`Start Cleaning` -> `Mark Clean & Ready`).
- **Defect Reporting**: Direct 1-click maintenance reporting from any room (e.g. AC faults, plumbing leaks).
- **Sanitation Matrix**: Floor-by-floor view of clean vs. dirty rooms.
-
-   # F. Guest Portal (`/customer`)
-
- **Active Reservations**: View upcoming stay details, room numbers, and dates.
- **In-Room Dining & Amenities Order**: Request breakfast, champagne, or spa appointments directly to the active room.
- **Printable Invoices & Receipts**: Download and print itemized official tax folios.
- **Reservation Cancellation**: Self-service cancellation following the hotel's 48-hour free cancellation policy.
- **Concierge Requests**: Request hypoallergenic bedding, late check-out, or transit assistance.
-
-
-  # 3. Relational Database Design (26 Tables)
-
-The database schema is fully normalized with foreign keys, checks, timestamps, and indexes:
-
-1. `users` — System accounts, passwords (bcrypt), roles, avatars
-2. `roles` — Role definitions (admin, manager, receptionist, housekeeper, customer)
-3. `permissions` — System permission codes
-4. `role_permissions` — Many-to-many role to permission matrix
-5. `employees` — Staff profiles, employee codes, departments, positions, salaries
-6. `departments` — Operational hotel departments (Executive, Front Desk, Housekeeping, Engineering, Food & Beverage)
-7. `customers` — Guest contact profiles, preferences, identification documents
-8. `room_types` — Room categories, descriptions, base prices, capacity, bed types, dimensions
-9. `rooms` — Physical room inventory (Room number, floor, status, operational status, night rate)
-10. `amenities` — Catalog of in-room and hotel amenities
-11. `room_amenities` — Many-to-many room to amenity mapping
-12. `bookings` — Reservations, dates, actual check-in/out, guests count, financial totals, status
-13. `booking_rooms` — Assigned rooms per booking
-14. `booking_guests` — Primary and secondary guest rosters
-15. `payments` — Audited transaction records (Cash, Card, Bank Transfer, Online)
-16. `invoices` — Official tax folios, subtotals, tax rates, balance due
-17. `invoice_items` — Line items (Room nights, dining, spa, taxes, discounts)
-18. `hotel_services` — Catalog of hotel experiences and amenities
-19. `service_orders` — In-room orders linked to guest bookings
-20. `housekeeping_tasks` — Cleaning assignments, priority levels, task types, statuses
-21. `maintenance_requests` — Defect tickets, technician assignments, repair costs
-22. `reviews` — Verified guest feedback and star ratings
-23. `notifications` — Role-based operational alerts and notifications
-24. `complaints` — Service recovery tickets and resolution notes
-25. `audit_logs` — Immutable security audit trail
+1. `roles` — System access roles
+2. `permissions` — Granular system capabilities
+3. `role_permissions` — Associative RBAC mapping
+4. `users` — User credentials and authentication profiles
+5. `departments` — Hotel administrative and operational departments
+6. `employees` — Staff employment records, positions, and salaries
+7. `customers` — Guest identity, passport/ID numbers, and contact details
+8. `room_types` — Specifications, capacities, bed types, and galleries
+9. `rooms` — Physical room inventory with operational and cleanliness states
+10. `amenities` — Hotel amenities catalog
+11. `room_amenities` — Room-amenity associative mapping
+12. `bookings` — Master reservation ledger
+13. `booking_rooms` — Multi-room booking allocations
+14. `booking_guests` — Occupant names under single reservations
+15. `payments` — Transaction records with Telebirr, CBE Birr, Card, and Cash methods
+16. `invoices` — Official tax folios with 12% hospitality tax
+17. `invoice_items` — Itemized room tariffs, dining, and spa line items
+18. `hotel_services` — Extra services and authentic Ethiopian dining menu
+19. `service_orders` — In-room dining and service orders
+20. `housekeeping_tasks` — Cleaning turnover priority queue
+21. `maintenance_requests` — Engineering work orders and defect tracking
+22. `reviews` — Verified guest ratings (1-5 stars) and testimonials
+23. `notifications` — Real-time in-app user notifications
+24. `complaints` — Service recovery tickets and management resolution notes
+25. `audit_logs` — Immutable forensic security audit trail
 26. `hotel_settings` — Key-value system configuration (Taxes, policies, contacts)
+27. `expenses` — Operational expense tracking ledger for accountants
 
+---
 
-
- # 4. Default Demonstration Accounts
-
-The system includes pre-seeded demonstration accounts with instant 1-click switching from the top navigation bar:
-
-   Role                  Name              Email                   Default Password 
-
- **Administrator**      Sarah Jenkins   `admin@habeshahotel.com`          `Admin123!` 
- **Hotel Manager**      David Miller     `manager@habeshahotel.com`        `Manager123!` 
- **Receptionist**       Elena Rostova    `reception@habeshahotel.com`      `Reception123!` 
- **Housekeeper**        Carlos Rivera    `housekeeping@habeshahotel.com`    `Clean123!` 
- **Guest / Customer**   Alexander Wright  `guest@habeshahotel.com`          `Guest123!` 
-
-*You can also register any new customer account or log in via the "Sign In" modal.*
-
-
-
-  # 5. Development & Running Commands
+## 5. Development & Running Commands
 
 ```bash
-# Install dependencies
+# 1. Install dependencies
 npm install
 
-# Start Express fullstack server with Vite middleware on port 3000
+# 2. Check and verify MySQL database connectivity & tables
+npm run test:db
+
+# 3. Start fullstack Express development server with Vite middleware on port 3000
 npm run dev
 
-# Validate TypeScript type safety
+# 4. Verify TypeScript static type safety (0 errors)
 npm run lint
 
-# Build for production
+# 5. Build optimized client bundle for production
 npm run build
 
-# Start production server
+# 6. Start production server
 npm start
 ```
 
+---
 
 ## 6. Environment Variables
 
-Defined in `.env.example`:
+Configured in `.env`:
 
-env
+```env
 PORT=3000
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=your_mysql_password
+DB_NAME=habesha_hotel_db
 JWT_SECRET=habesha_hotel_jwt_super_secret_key_2026_shms
-DATABASE_FILE=shms.db
 NODE_ENV=development
-
-
+```
