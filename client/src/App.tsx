@@ -137,7 +137,7 @@ function AppContent() {
             src="/images/logo-hotel.png"
             alt="HABESHA-HOTEL"
             onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src = '/images/logo hotel.png';
+              (e.currentTarget as HTMLImageElement).src = '/images/logo-hotel.png';
             }}
             className="w-16 h-16 object-contain animate-pulse"
           />
