@@ -165,6 +165,136 @@ export async function syncEthiopianDefaults() {
 
     // Synchronize room operational prices with room type base prices
     await execute("UPDATE rooms r JOIN room_types rt ON r.room_type_id = rt.id SET r.price_per_night = rt.base_price");
+
+    // ── 6. SEED PAYMENT METHODS ───────────────────────────────────────────────
+    try {
+      const pmCount = await queryOne<{ cnt: number }>("SELECT COUNT(*) as cnt FROM payment_methods");
+      if (!pmCount || pmCount.cnt === 0) {
+        await pool.query(`
+          INSERT INTO payment_methods (code, name, type, currency, is_active, account_number, instructions) VALUES
+          ('telebirr', 'Telebirr SuperApp & USSD (*127#)', 'mobile_money', 'ETB', 1, '0911001122', 'Direct merchant paybill 884400 or mobile checkout'),
+          ('cbe_birr', 'Commercial Bank of Ethiopia (CBE Birr)', 'mobile_money', 'ETB', 1, '1000123456789', 'Pay via CBE Birr merchant shortcode 552211'),
+          ('bank_transfer', 'CBE Direct Bank Wire Transfer', 'bank_transfer', 'ETB', 1, '1000987654321', 'Transfer to HABESHA HOTEL SHMS - Bole Branch'),
+          ('card', 'International Visa & Mastercard', 'card', 'ETB', 1, 'POS-TERMINAL-01', 'Processed securely via hotel front desk card terminal'),
+          ('cash', 'Cash Settlement at Front Desk', 'cash', 'ETB', 1, 'CASH-DRAWER-01', 'Settled in ETB or USD at front reception counter')
+        `);
+      }
+    } catch (_) {}
+
+    // ── 7. SEED SHIFTS ────────────────────────────────────────────────────────
+    try {
+      const shiftCount = await queryOne<{ cnt: number }>("SELECT COUNT(*) as cnt FROM shifts");
+      if (!shiftCount || shiftCount.cnt === 0) {
+        await pool.query(`
+          INSERT INTO shifts (name, code, start_time, end_time, description) VALUES
+          ('Morning Shift', 'MORNING', '07:00:00', '15:30:00', 'Front desk arrivals, room service breakfast, routine housekeeping turnaround'),
+          ('Evening Shift', 'EVENING', '15:00:00', '23:30:00', 'Check-ins, dining room dinner service, evening turndown and concierge'),
+          ('Night Shift', 'NIGHT', '23:00:00', '07:30:00', 'Overnight security, late airport arrivals, night audit & billing roll')
+        `);
+      }
+    } catch (_) {}
+
+    // ── 8. SEED PROMOTIONAL DISCOUNTS ─────────────────────────────────────────
+    try {
+      const discCount = await queryOne<{ cnt: number }>("SELECT COUNT(*) as cnt FROM discounts");
+      if (!discCount || discCount.cnt === 0) {
+        await pool.query(`
+          INSERT INTO discounts (code, name, discount_type, value, min_spend, valid_from, valid_until, max_uses, current_uses, is_active) VALUES
+          ('WELCOME2026', 'New Guest Welcome Incentive', 'percentage', 10.00, 2000.00, '2026-01-01', '2026-12-31', 500, 14, 1),
+          ('HABESHA_VIP', 'Returning Loyalty Member Discount', 'percentage', 15.00, 5000.00, '2026-01-01', '2026-12-31', 200, 8, 1),
+          ('DIASPORA_PROMO', 'Diaspora Homecoming Suite Voucher', 'fixed_amount', 2000.00, 10000.00, '2026-06-01', '2026-12-31', 100, 3, 1)
+        `);
+      }
+    } catch (_) {}
+
+    // ── 9. SEED HOTEL INVENTORY & CONSUMABLES ─────────────────────────────────
+    try {
+      const invCount = await queryOne<{ cnt: number }>("SELECT COUNT(*) as cnt FROM inventory");
+      if (!invCount || invCount.cnt === 0) {
+        await pool.query(`
+          INSERT INTO inventory (item_code, name, category, unit, quantity_on_hand, reorder_level, unit_cost, currency, storage_location) VALUES
+          ('LIN-001', 'Egyptian Cotton Bath Towels (White)', 'linen', 'pieces', 140.00, 30.00, 450.00, 'ETB', 'Linen Master Closet Floor 2'),
+          ('LIN-002', 'King Size Luxury Fitted Bed Sheet Sets', 'linen', 'pieces', 80.00, 20.00, 1200.00, 'ETB', 'Linen Master Closet Floor 3'),
+          ('TOI-001', 'Organic Eucalyptus & Honey Guest Soap Bars', 'toiletries', 'pieces', 600.00, 100.00, 45.00, 'ETB', 'Housekeeping Chemical Storage'),
+          ('TOI-002', 'Botanical Herbal Conditioning Shampoo (50ml)', 'toiletries', 'bottles', 450.00, 80.00, 55.00, 'ETB', 'Housekeeping Chemical Storage'),
+          ('FNB-001', 'Specialty Grade Yirgacheffe Coffee Beans', 'food_beverage', 'kg', 85.00, 15.00, 480.00, 'ETB', 'Restaurant Dry Pantry'),
+          ('FNB-002', 'Pure White Magna Teff Grain for Injera', 'food_beverage', 'kg', 300.00, 50.00, 130.00, 'ETB', 'Bakery Store Area'),
+          ('CLN-001', 'Antibacterial Floor Wash & Tile Sanitizer', 'cleaning_supplies', 'liters', 60.00, 15.00, 220.00, 'ETB', 'Central Chemical Store'),
+          ('MNT-001', '9W Warm White LED Ceiling Spot Bulbs', 'maintenance_parts', 'pieces', 95.00, 20.00, 160.00, 'ETB', 'Engineering Workshop'),
+          ('MNT-002', 'Heavy Duty Ceramic Bathroom Shower Cartridges', 'maintenance_parts', 'pieces', 32.00, 8.00, 680.00, 'ETB', 'Engineering Workshop')
+        `);
+
+        // Record initial stock inventory transaction
+        await pool.query(`
+          INSERT INTO inventory_transactions (inventory_id, transaction_type, quantity, unit_price, total_cost, notes, recorded_by)
+          SELECT id, 'purchase_in', quantity_on_hand, unit_cost, (quantity_on_hand * unit_cost), 'Initial certified inventory audit intake', ${superAdminId}
+          FROM inventory
+        `);
+      }
+    } catch (_) {}
+
+    // ── 10. SEED STAFF SCHEDULES & ATTENDANCE ────────────────────────────────
+    try {
+      const schedCount = await queryOne<{ cnt: number }>("SELECT COUNT(*) as cnt FROM staff_schedules");
+      if (!schedCount || schedCount.cnt === 0) {
+        const todayStr = new Date().toISOString().split('T')[0];
+        const empList = await query<{ id: number; department_id: number }>("SELECT id, department_id FROM employees LIMIT 5");
+        const morningShift = await queryOne<{ id: number }>("SELECT id FROM shifts WHERE code='MORNING'");
+        const eveningShift = await queryOne<{ id: number }>("SELECT id FROM shifts WHERE code='EVENING'");
+
+        if (empList.length > 0 && morningShift && eveningShift) {
+          for (let i = 0; i < empList.length; i++) {
+            const shiftId = i % 2 === 0 ? morningShift.id : eveningShift.id;
+            await execute(
+              "INSERT IGNORE INTO staff_schedules (employee_id, shift_id, department_id, work_date, status, notes) VALUES (?,?,?,?,'scheduled','Standard operational weekly rotation')",
+              [empList[i].id, shiftId, empList[i].department_id, todayStr]
+            );
+
+            // Record attendance for current day
+            await execute(
+              "INSERT IGNORE INTO staff_attendance (employee_id, attendance_date, clock_in, total_hours, status, notes) VALUES (?,?,NOW(),8.00,'present','Clocked in on time via digital badge')",
+              [empList[i].id, todayStr]
+            );
+          }
+        }
+      }
+    } catch (_) {}
+
+    // ── 11. SEED HISTORICAL LOG TRACES ───────────────────────────────────────
+    try {
+      const rshCount = await queryOne<{ cnt: number }>("SELECT COUNT(*) as cnt FROM room_status_history");
+      if (!rshCount || rshCount.cnt === 0) {
+        const roomRow = await queryOne<{ id: number }>("SELECT id FROM rooms LIMIT 1");
+        if (roomRow) {
+          await execute(
+            "INSERT INTO room_status_history (room_id, previous_status, new_status, changed_by, reason) VALUES (?, 'dirty', 'available', ?, 'Routine checkout cleaning and full sanitization verified')",
+            [roomRow.id, superAdminId]
+          );
+        }
+      }
+
+      const bshCount = await queryOne<{ cnt: number }>("SELECT COUNT(*) as cnt FROM booking_status_history");
+      if (!bshCount || bshCount.cnt === 0) {
+        const bookRow = await queryOne<{ id: number }>("SELECT id FROM bookings LIMIT 1");
+        if (bookRow) {
+          await execute(
+            "INSERT INTO booking_status_history (booking_id, previous_status, new_status, changed_by, notes) VALUES (?, 'pending', 'confirmed', ?, 'Advance deposit verified via Telebirr')",
+            [bookRow.id, superAdminId]
+          );
+        }
+      }
+
+      const refCount = await queryOne<{ cnt: number }>("SELECT COUNT(*) as cnt FROM refunds");
+      if (!refCount || refCount.cnt === 0) {
+        const payRow = await queryOne<{ id: number; booking_id: number; amount: number }>("SELECT id, booking_id, amount FROM payments LIMIT 1");
+        if (payRow) {
+          await execute(
+            "INSERT INTO refunds (refund_number, payment_id, booking_id, amount, currency, refund_method, reason, status, processed_by, notes) VALUES ('REF-2026-0001', ?, ?, 1200.00, 'ETB', 'telebirr', 'Cancellation refund processed under 48h hotel policy', 'completed', ?, 'Approved by Hotel Accountant & Manager')",
+            [payRow.id, payRow.booking_id, accountantId]
+          );
+        }
+      }
+    } catch (_) {}
   } catch (e) {
     // Ignore if not applicable
   }
