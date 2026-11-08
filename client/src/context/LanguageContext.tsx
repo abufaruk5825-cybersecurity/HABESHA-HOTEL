@@ -304,6 +304,18 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'location.get_directions': 'Open in Google Maps',
     'location.call_concierge': 'Call Concierge Desk',
 
+    // ── Social & Instant Contact Channels ────────────────────────────
+    'contact.social_heading': 'Direct Instant Messaging & Social Channels',
+    'contact.social_subtitle': 'For instant room inquiries, airport shuttles, and 24/7 guest assistance, message us directly on Telegram or Instagram.',
+    'contact.telegram_label': 'Telegram Direct',
+    'contact.telegram_handle': '@Abuzubeir1234',
+    'contact.telegram_desc': 'Instant chat with hotel management & reservations desk',
+    'contact.telegram_action': 'Chat on Telegram',
+    'contact.instagram_label': 'Instagram Official',
+    'contact.instagram_handle': '@seyaman5825',
+    'contact.instagram_desc': 'Follow our luxury suites, events & send a Direct Message',
+    'contact.instagram_action': 'View & DM on Instagram',
+
     // ── Global Footer ───────────────────────────────────────────────
     'footer.description': 'A modern 5-star hotel in Bole, Addis Ababa, combining genuine Ethiopian hospitality with luxury suites, authentic cultural dining, and 24/7 guest service.',
     'footer.hospitality_line': 'Authentic Ethiopian Hospitality • Bole, Addis Ababa',
@@ -683,6 +695,18 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'location.landmarks_val': 'ሚሌኒየም አዳራሽ (3 ደቂቃ የእግር መንገድ)፣ አፍሪካ ህብረትና ኢካ (10 ደቂቃ በመኪና)',
     'location.get_directions': 'በጉግል ካርታ አቅጣጫ አሳይ',
     'location.call_concierge': 'ለእንግዳ ተቀባይ ደውል',
+
+    // ── Social & Instant Contact Channels ────────────────────────────
+    'contact.social_heading': 'ፈጣን የቀጥታ የመልእክት እና የማህበራዊ ገፆች',
+    'contact.social_subtitle': 'ለፈጣን የክፍል ማስያዝ፣ ለአውሮፕላን ማረፊያ ማመላለሻ እና ለ24-ሰዓት አገልግሎት በቀጥታ በቴሌግራም ወይም በኢንስታግራም ያግኙን።',
+    'contact.telegram_label': 'የቴሌግራም ቀጥታ መልእክት',
+    'contact.telegram_handle': '@Abuzubeir1234',
+    'contact.telegram_desc': 'ከሆቴሉ አስተዳደርና እንግዳ መቀበያ ጋር በቀጥታ ይወያዩ',
+    'contact.telegram_action': 'በቴሌግራም ያናግሩን',
+    'contact.instagram_label': 'ኦፊሴላዊ የኢንስታግራም ገጽ',
+    'contact.instagram_handle': '@seyaman5825',
+    'contact.instagram_desc': 'ስለ ሆቴሉ ስዊቶችና ዝግጅቶች ይመልከቱ እንዲሁም ቀጥታ መልእክት ይላኩ',
+    'contact.instagram_action': 'በኢንስታግራም ይከተሉን',
 
     // ── Global Footer ───────────────────────────────────────────────
     'footer.description': 'በቦሌ አዲስ አበባ የሚገኝ ባለ 5-ኮከብ ዘመናዊ ሆቴል — እውነተኛ የኢትዮጵያ መስተንግዶን ከቅንጦት ስዊቶች፣ ባህላዊ ምግቦች እና የ24 ሰዓት አገልግሎት ጋር ያቀናጀ።',
