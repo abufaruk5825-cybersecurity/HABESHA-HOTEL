@@ -9,6 +9,8 @@ import { Navbar } from './components/common/Navbar';
 import { PublicWebsite } from './pages/PublicWebsite';
 import { BookingModal } from './components/website/BookingModal';
 import { AuthModal } from './components/common/AuthModal';
+import { AboutHeritageModal } from './components/website/AboutHeritageModal';
+import { ContactLocationModal } from './components/website/ContactLocationModal';
 import { FoodOrderProvider } from './context/FoodOrderContext';
 import { FoodOrderModal } from './components/website/FoodOrderModal';
 
@@ -64,6 +66,18 @@ function AppContent() {
     startStep?: 1 | 2;
   }>({});
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [aboutModalOpen, setAboutModalOpen] = useState(false);
+  const [contactModalOpen, setContactModalOpen] = useState(false);
+
+  /** Check for initial hash (#about, #contact, #location) on page load */
+  useEffect(() => {
+    const hash = window.location.hash.toLowerCase();
+    if (hash === '#about') {
+      setAboutModalOpen(true);
+    } else if (hash === '#contact' || hash === '#location') {
+      setContactModalOpen(true);
+    }
+  }, []);
 
   /** When a user is already logged-in on first load, jump straight to their dashboard in default Light Mode. */
   useEffect(() => {
@@ -143,15 +157,43 @@ function AppContent() {
             onNavigate={handleNavigate}
             onOpenBookingModal={handleOpenBooking}
             onOpenAuthModal={() => setAuthModalOpen(true)}
+            onOpenAboutModal={() => setAboutModalOpen(true)}
+            onOpenContactModal={() => setContactModalOpen(true)}
           />
           <main className="flex-1">
             <PublicWebsite
               onOpenBookingModal={handleOpenBooking}
               onSearchAvailability={handleSearchAvailability}
+              onOpenAboutModal={() => setAboutModalOpen(true)}
+              onOpenContactModal={() => setContactModalOpen(true)}
             />
           </main>
 
           <FoodOrderModal />
+
+          {/* About Us & Heritage Dedicated Modal */}
+          {aboutModalOpen && (
+            <AboutHeritageModal
+              isOpen={aboutModalOpen}
+              onClose={() => setAboutModalOpen(false)}
+              onOpenBooking={() => {
+                setAboutModalOpen(false);
+                handleOpenBooking();
+              }}
+              onOpenContact={() => {
+                setAboutModalOpen(false);
+                setContactModalOpen(true);
+              }}
+            />
+          )}
+
+          {/* Contact & Location Dedicated Modal */}
+          {contactModalOpen && (
+            <ContactLocationModal
+              isOpen={contactModalOpen}
+              onClose={() => setContactModalOpen(false)}
+            />
+          )}
 
           {bookingModalOpen && (
             <BookingModal
