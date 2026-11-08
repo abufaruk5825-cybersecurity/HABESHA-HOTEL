@@ -4,7 +4,7 @@ import { useLanguage } from '../../context/LanguageContext';
 import {
   ChevronDown, MapPin, Mail, Phone, Clock, Send, CheckCircle,
   Plane, Car, Navigation, ExternalLink, ShieldCheck, Building2,
-  Compass
+  Compass, Instagram
 } from 'lucide-react';
 
 export const AboutFaqContact: React.FC = () => {
@@ -58,6 +58,10 @@ export const AboutFaqContact: React.FC = () => {
   const hotelAddress = hotelSettings.hotel_address || (language === 'am' ? 'ቦሌ ክፍለ ከተማ፣ አፍሪካ ጎዳና፣ አዲስ አበባ፣ ኢትዮጵያ' : 'Bole Sub-City, Africa Avenue (Bole Road), Addis Ababa, Ethiopia');
   const hotelPhone = hotelSettings.hotel_phone || '+251 11 667 8000';
   const hotelEmail = hotelSettings.hotel_email || 'reservations@habeshahotel.com';
+  const hotelTelegram = hotelSettings.hotel_telegram || '@Abuzubeir1234';
+  const hotelTelegramLink = hotelSettings.hotel_telegram_link || 'https://t.me/Abuzubeir1234';
+  const hotelInstagram = hotelSettings.hotel_instagram || 'seyaman5825';
+  const hotelInstagramLink = hotelSettings.hotel_instagram_link || 'https://instagram.com/seyaman5825';
 
   return (
     <div className="bg-slate-950 text-slate-100">
@@ -246,13 +250,84 @@ export const AboutFaqContact: React.FC = () => {
                     <Phone className="w-4 h-4 text-amber-400" />
                     <span>{hotelPhone}</span>
                   </a>
+                  <a
+                    href={hotelTelegramLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-xl bg-sky-950/80 hover:bg-sky-900 text-sky-400 hover:text-sky-300 border border-sky-500/50 flex items-center justify-center transition-all shadow-md hover:scale-105"
+                    title="Telegram"
+                    aria-label="Telegram"
+                  >
+                    <Send className="w-4 h-4" />
+                  </a>
+                  <a
+                    href={hotelInstagramLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-xl bg-pink-950/80 hover:bg-pink-900 text-pink-400 hover:text-pink-300 border border-pink-500/50 flex items-center justify-center transition-all shadow-md hover:scale-105"
+                    title="Instagram"
+                    aria-label="Instagram"
+                  >
+                    <Instagram className="w-4 h-4" />
+                  </a>
                 </div>
               </div>
 
             </div>
           </div>
 
-          {/* ─────────────────── B. FAQ & CONTACT MESSAGE FORM GRID ─────────────────── */}
+          {/* ─────────────────── B. INSTANT MESSAGING & SOCIAL CHANNELS ─────────────────── */}
+          <div className="bg-gradient-to-r from-slate-900 via-slate-900/95 to-slate-950 border border-amber-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-5 space-y-3">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>{language === 'am' ? '24/7 ፈጣን መልእክትና ድጋፍ' : '24/7 Instant Messaging & Support'}</span>
+                </div>
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                  {t('contact.social_heading', 'Direct Instant Messaging & Social Channels')}
+                </h3>
+                <p className="text-slate-400 text-xs sm:text-sm leading-relaxed font-light">
+                  {t('contact.social_subtitle', 'For instant room inquiries, airport shuttles, and 24/7 guest assistance, message us directly on Telegram or Instagram.')}
+                </p>
+                <div className="pt-1 flex items-center gap-2 text-xs text-amber-300/90 font-medium">
+                  <Clock className="w-3.5 h-3.5 text-amber-400" />
+                  <span>{language === 'am' ? 'በደቂቃዎች ውስጥ ቀጥታ ምላሽ እንሰጣለን' : 'Typical response time: under 15 minutes'}</span>
+                </div>
+              </div>
+
+              <div className="lg:col-span-7 flex flex-wrap items-center justify-center lg:justify-end gap-6">
+                {/* Telegram Icon Button */}
+                <a
+                  href={hotelTelegramLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-slate-950 border-2 border-sky-500/50 hover:border-sky-400 hover:bg-sky-950/40 transition-all duration-300 shadow-2xl hover:scale-110 cursor-pointer"
+                  title="Telegram"
+                  aria-label="Telegram"
+                >
+                  <div className="absolute inset-0 rounded-3xl bg-sky-500/10 blur-xl group-hover:bg-sky-500/30 transition-all" />
+                  <Send className="w-9 h-9 sm:w-11 sm:h-11 text-sky-400 group-hover:text-sky-300 relative z-10 transition-transform group-hover:scale-110" />
+                </a>
+
+                {/* Instagram Icon Button */}
+                <a
+                  href={hotelInstagramLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-slate-950 border-2 border-pink-500/50 hover:border-pink-400 hover:bg-pink-950/40 transition-all duration-300 shadow-2xl hover:scale-110 cursor-pointer"
+                  title="Instagram"
+                  aria-label="Instagram"
+                >
+                  <div className="absolute inset-0 rounded-3xl bg-pink-500/10 blur-xl group-hover:bg-pink-500/30 transition-all" />
+                  <Instagram className="w-9 h-9 sm:w-11 sm:h-11 text-pink-400 group-hover:text-pink-300 relative z-10 transition-transform group-hover:scale-110" />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* ─────────────────── C. FAQ & CONTACT MESSAGE FORM GRID ─────────────────── */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
             {/* FAQ Accordion */}
@@ -385,9 +460,34 @@ export const AboutFaqContact: React.FC = () => {
                     <span>{t('about.contact_hours', 'Reception Desk: 24/7 Service')}</span>
                   </div>
                   <div className="flex items-start gap-1.5">
-                    <Mail className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
-                    <a href={`mailto:${hotelEmail}`} className="hover:text-amber-300 truncate">
-                      {hotelEmail}
+                    <Phone className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
+                    <a href={`tel:${hotelPhone}`} className="hover:text-amber-300 truncate">
+                      {hotelPhone}
+                    </a>
+                  </div>
+                  <div className="flex items-center gap-2 sm:col-span-2 pt-1 border-t border-slate-800/60">
+                    <span className="text-[11px] text-slate-400">
+                      {language === 'am' ? 'ቀጥታ መልእክት፦' : 'Direct Instant Chat:'}
+                    </span>
+                    <a
+                      href={hotelTelegramLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-8 h-8 rounded-lg bg-sky-950 border border-sky-500/40 text-sky-400 hover:text-sky-300 hover:bg-sky-900 flex items-center justify-center transition-all shadow-sm hover:scale-105"
+                      title="Telegram"
+                      aria-label="Telegram"
+                    >
+                      <Send className="w-4 h-4" />
+                    </a>
+                    <a
+                      href={hotelInstagramLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-8 h-8 rounded-lg bg-pink-950 border border-pink-500/40 text-pink-400 hover:text-pink-300 hover:bg-pink-900 flex items-center justify-center transition-all shadow-sm hover:scale-105"
+                      title="Instagram"
+                      aria-label="Instagram"
+                    >
+                      <Instagram className="w-4 h-4" />
                     </a>
                   </div>
                 </div>
