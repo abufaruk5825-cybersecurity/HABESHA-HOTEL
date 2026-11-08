@@ -152,7 +152,7 @@ export const AboutFaqContact: React.FC = () => {
           </div>
 
           {/* ─────────────────── A. INTERACTIVE LOCATION & MAP HUB ─────────────────── */}
-          <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-8">
+          <div id="location" className="scroll-mt-24 bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-8">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
               {/* Map Iframe Column (7 cols) */}
