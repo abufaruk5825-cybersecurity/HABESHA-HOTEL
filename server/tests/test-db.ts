@@ -69,18 +69,20 @@ try {
   }
   console.log(`✅ Schema applied  (${created} executed, ${skipped} already existed)`);
 
-  // ── 4. Check all 27 tables ───────────────────────────────────────────────
+  // ── 4. Check all 37 tables ───────────────────────────────────────────────
   const expectedTables = [
     'roles','permissions','role_permissions','users','departments','employees',
-    'customers','room_types','rooms','amenities','room_amenities','bookings',
-    'booking_rooms','booking_guests','payments','invoices','invoice_items',
+    'customers','room_types','rooms','amenities','room_amenities','room_status_history',
+    'bookings','booking_rooms','booking_guests','booking_status_history',
+    'payment_methods','payments','refunds','invoices','invoice_items','expenses','discounts',
     'hotel_services','service_orders','housekeeping_tasks','maintenance_requests',
-    'reviews','notifications','complaints','audit_logs','hotel_settings','expenses'
+    'shifts','staff_schedules','staff_attendance','inventory','inventory_transactions',
+    'reviews','complaints','notifications','audit_logs','hotel_settings'
   ];
   const [tableRows] = await conn.query('SHOW TABLES') as any;
   const existingTables: string[] = tableRows.map((r: any) => Object.values(r)[0] as string);
   
-  console.log('\n--- Table existence (26 expected) ---');
+  console.log(`\n--- Table existence (${expectedTables.length} expected) ---`);
   let missing = 0;
   for (const t of expectedTables) {
     if (existingTables.includes(t)) {
@@ -95,7 +97,7 @@ try {
     console.log(`\n❌ ${missing} table(s) missing — check schema.sql`);
     process.exit(1);
   }
-  console.log(`\n✅ All 26 tables present`);
+  console.log(`\n✅ All ${expectedTables.length} tables present`);
 
   // ── 5. Seed if empty ────────────────────────────────────────────────────
   const [[ucnt]] = await conn.execute('SELECT COUNT(*) as c FROM users') as any;
