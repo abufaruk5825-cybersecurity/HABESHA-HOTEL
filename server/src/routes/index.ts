@@ -12,6 +12,8 @@ import * as customerCtrl from '../controllers/customerController.ts';
 import * as settingsCtrl from '../controllers/settingsController.ts';
 import * as expenseCtrl from '../controllers/expenseController.ts';
 import * as rbacCtrl from '../controllers/rbacController.ts';
+import * as invCtrl from '../controllers/inventoryController.ts';
+import * as staffCtrl from '../controllers/staffOperationsController.ts';
 import { authenticate, optionalAuthenticate, requireRole } from '../middleware/auth.ts';
 
 const api = Router();
@@ -45,8 +47,25 @@ api.post('/bookings/:id/cancel', authenticate, bookingCtrl.cancelBooking);
 // =================== PAYMENTS & INVOICES ===================
 api.get('/payments', authenticate, paymentCtrl.getPayments);
 api.post('/payments', authenticate, requireRole('superadmin', 'admin', 'manager', 'receptionist', 'accountant'), paymentCtrl.recordPayment);
+api.get('/payments/refunds', authenticate, requireRole('superadmin', 'admin', 'manager', 'accountant'), paymentCtrl.getRefunds);
+api.post('/payments/refunds', authenticate, requireRole('superadmin', 'admin', 'accountant'), paymentCtrl.recordRefund);
+api.get('/payment-methods', paymentCtrl.getPaymentMethods);
+api.get('/discounts', paymentCtrl.getDiscounts);
 api.get('/invoices', authenticate, paymentCtrl.getInvoices);
 api.get('/invoices/:id', authenticate, paymentCtrl.getInvoiceById);
+
+// =================== HOTEL INVENTORY & CONSUMABLES ===================
+api.get('/inventory', authenticate, requireRole('superadmin', 'admin', 'manager', 'housekeeper', 'maintenance'), invCtrl.getInventory);
+api.post('/inventory', authenticate, requireRole('superadmin', 'admin', 'manager'), invCtrl.createInventoryItem);
+api.get('/inventory/transactions', authenticate, requireRole('superadmin', 'admin', 'manager'), invCtrl.getInventoryTransactions);
+api.post('/inventory/transactions', authenticate, requireRole('superadmin', 'admin', 'manager', 'housekeeper', 'maintenance'), invCtrl.recordInventoryTransaction);
+
+// =================== STAFF ROSTERS & ATTENDANCE ===================
+api.get('/staff/shifts', authenticate, staffCtrl.getShifts);
+api.get('/staff/schedules', authenticate, staffCtrl.getStaffSchedules);
+api.post('/staff/schedules', authenticate, requireRole('superadmin', 'admin', 'manager'), staffCtrl.createStaffSchedule);
+api.get('/staff/attendance', authenticate, staffCtrl.getStaffAttendance);
+api.post('/staff/attendance', authenticate, staffCtrl.recordStaffAttendance);
 
 // =================== EXPENSES & ACCOUNTING ===================
 api.get('/expenses', authenticate, requireRole('superadmin', 'admin', 'manager', 'accountant'), expenseCtrl.getExpenses);
