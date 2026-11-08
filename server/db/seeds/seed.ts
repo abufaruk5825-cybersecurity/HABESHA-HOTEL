@@ -9,6 +9,10 @@ export async function syncEthiopianDefaults() {
     await execute("UPDATE hotel_settings SET value='reservations@habeshahotel.com' WHERE `key`='hotel_email'");
     await execute("UPDATE hotel_settings SET value='ETB' WHERE `key`='currency_symbol'");
     await execute("UPDATE hotel_settings SET value='ETB' WHERE `key`='currency_code'");
+    await execute("INSERT INTO hotel_settings (`key`,value,label,category) VALUES ('hotel_telegram', '@Abuzubeir1234', 'Official Telegram Handle', 'social') ON DUPLICATE KEY UPDATE value='@Abuzubeir1234'");
+    await execute("INSERT INTO hotel_settings (`key`,value,label,category) VALUES ('hotel_telegram_link', 'https://t.me/Abuzubeir1234', 'Telegram Direct Chat Link', 'social') ON DUPLICATE KEY UPDATE value='https://t.me/Abuzubeir1234'");
+    await execute("INSERT INTO hotel_settings (`key`,value,label,category) VALUES ('hotel_instagram', 'seyaman5825', 'Official Instagram Handle', 'social') ON DUPLICATE KEY UPDATE value='seyaman5825'");
+    await execute("INSERT INTO hotel_settings (`key`,value,label,category) VALUES ('hotel_instagram_link', 'https://instagram.com/seyaman5825', 'Instagram Profile Link', 'social') ON DUPLICATE KEY UPDATE value='https://instagram.com/seyaman5825'");
 
     // Ensure users.role and payments.payment_method column types support new roles and methods
     try {
@@ -489,6 +493,10 @@ export async function seedDatabase() {
     await setting('hotel_email', 'reservations@habeshahotel.com', 'Hotel Primary Email', 'general');
     await setting('hotel_phone', '+251 11 667 8000', 'Hotel Phone Line', 'general');
     await setting('hotel_address', 'Bole Sub-City, Africa Avenue (Bole Road), Addis Ababa, Ethiopia', 'Hotel Physical Address', 'general');
+    await setting('hotel_telegram', '@Abuzubeir1234', 'Official Telegram Handle', 'social');
+    await setting('hotel_telegram_link', 'https://t.me/Abuzubeir1234', 'Telegram Direct Chat Link', 'social');
+    await setting('hotel_instagram', 'seyaman5825', 'Official Instagram Handle', 'social');
+    await setting('hotel_instagram_link', 'https://instagram.com/seyaman5825', 'Instagram Profile Link', 'social');
     await setting('currency_symbol', '$', 'Currency Symbol', 'finance');
     await setting('currency_code', 'USD', 'Currency ISO Code', 'finance');
     await setting('tax_rate', '12.0', 'Occupancy & City Tax (%)', 'finance');
