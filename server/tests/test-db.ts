@@ -115,13 +115,15 @@ try {
   }
 
   // ── 6. Row count audit ──────────────────────────────────────────────────
-  console.log('\n--- Row counts ---');
+  console.log('\n--- Row counts (All 37 Tables) ---');
   const auditTables = [
-    'users', 'customers', 'rooms', 'room_types', 'amenities',
-    'bookings', 'payments', 'invoices', 'invoice_items',
-    'hotel_services', 'service_orders',
-    'housekeeping_tasks', 'maintenance_requests',
-    'reviews', 'notifications', 'hotel_settings', 'expenses'
+    'roles', 'permissions', 'role_permissions', 'users', 'departments', 'employees',
+    'customers', 'room_types', 'rooms', 'amenities', 'room_amenities', 'room_status_history',
+    'bookings', 'booking_rooms', 'booking_guests', 'booking_status_history',
+    'payment_methods', 'payments', 'refunds', 'invoices', 'invoice_items', 'expenses', 'discounts',
+    'hotel_services', 'service_orders', 'housekeeping_tasks', 'maintenance_requests',
+    'shifts', 'staff_schedules', 'staff_attendance', 'inventory', 'inventory_transactions',
+    'reviews', 'complaints', 'notifications', 'audit_logs', 'hotel_settings'
   ];
   let emptyCount = 0;
   for (const t of auditTables) {
