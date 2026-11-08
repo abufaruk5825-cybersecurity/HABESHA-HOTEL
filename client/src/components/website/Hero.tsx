@@ -5,7 +5,7 @@ import { useLanguage } from '../../context/LanguageContext';
 
 // ── Background slide images — all local paths, no external URLs ───────────────
 const HERO_SLIDES = [
-  { src: '/images/hotel/hero-image.webp',                      fallback: '/images/hotel/hero-imge.webp',               alt: 'HABESHA-HOTEL Luxury Resort & Grand Exterior' },
+  { src: '/images/hotel/hero-image.webp',                      fallback: '/images/hotel/hotel-exterior.jpg',           alt: 'HABESHA-HOTEL Luxury Resort & Grand Exterior' },
   { src: '/images/food/classic-doro-wat.jpg',                  fallback: '/images/food/doro-wat.jpg',                  alt: 'Classic Doro Wat — the signature Ethiopian dish' },
   { src: '/images/food/coffee-ceremony.jpg',                   fallback: '/images/food/traditional-coffee-ceremony-experience.jpg', alt: 'Ethiopian coffee ceremony' },
   { src: '/images/food/siga-tibs.jpg',                         fallback: '/images/food/tibs.jpg',                      alt: 'Siga Tibs — pan-seared beef' },
@@ -156,7 +156,7 @@ export const Hero: React.FC<HeroProps> = ({ onSearchAvailability, onOpenBookingM
             src="/images/logo-hotel.png"
             alt="HABESHA-HOTEL Logo"
             onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src = '/images/logo hotel.png';
+              (e.currentTarget as HTMLImageElement).src = '/images/logo-hotel.png';
             }}
             className="h-16 sm:h-20 md:h-24 w-auto object-contain rounded-2xl shadow-2xl border border-amber-500/40 p-1.5 bg-slate-950/80 backdrop-blur-md hover:scale-105 transition-transform"
           />
