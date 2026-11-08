@@ -102,7 +102,7 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({ isOpen, onClose, inv
                     <img
                       src="/images/logo-hotel.png"
                       alt="HABESHA-HOTEL Logo"
-                      onError={e => { (e.currentTarget as HTMLImageElement).src = '/images/logo hotel.png'; }}
+                      onError={e => { (e.currentTarget as HTMLImageElement).src = '/images/logo-hotel.png'; }}
                       className="h-8 w-auto object-contain rounded-md"
                     />
                     <span className="font-serif text-2xl font-bold tracking-wider text-slate-950">
