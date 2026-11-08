@@ -8,6 +8,10 @@ export async function getHotelSettings(_req: Request, res: Response) {
     const settings = await query<{ key: string; value: string }>('SELECT * FROM hotel_settings');
     const settingsMap: Record<string, string> = {};
     settings.forEach((s: any) => { settingsMap[s.key] = s.value; });
+    if (!settingsMap['hotel_telegram']) settingsMap['hotel_telegram'] = '@Abuzubeir1234';
+    if (!settingsMap['hotel_telegram_link']) settingsMap['hotel_telegram_link'] = 'https://t.me/Abuzubeir1234';
+    if (!settingsMap['hotel_instagram']) settingsMap['hotel_instagram'] = 'seyaman5825';
+    if (!settingsMap['hotel_instagram_link']) settingsMap['hotel_instagram_link'] = 'https://instagram.com/seyaman5825';
     return res.json({ settings_list: settings, settings: settingsMap });
   } catch (error: any) {
     console.error('getHotelSettings error:', error);
