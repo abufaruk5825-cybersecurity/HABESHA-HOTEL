@@ -30,7 +30,7 @@ const SLIDES: Slide[] = [
   },
   {
     src: '/images/food/coffee-ceremony.jpg',
-    fallback: '/images/food/Traditional Coffee Ceremony Experience.jpg',
+    fallback: '/images/food/traditional-coffee-ceremony-experience.jpg',
     title: 'Ethiopian Coffee Ceremony',
     subtitle: 'Freshly roasted and brewed Yirgacheffe coffee served in traditional jebena clay pots',
     tag: 'Cultural Experience',
