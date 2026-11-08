@@ -12,11 +12,15 @@ import { Footer } from '../components/common/Footer';
 interface PublicWebsiteProps {
   onOpenBookingModal: (roomTypeId?: number) => void;
   onSearchAvailability: (checkIn: string, checkOut: string, guests: number) => void;
+  onOpenAboutModal?: () => void;
+  onOpenContactModal?: () => void;
 }
 
 export const PublicWebsite: React.FC<PublicWebsiteProps> = ({
   onOpenBookingModal,
   onSearchAvailability,
+  onOpenAboutModal,
+  onOpenContactModal,
 }) => {
   return (
     <div className="flex flex-col min-h-screen bg-slate-950 text-slate-100">
@@ -50,7 +54,10 @@ export const PublicWebsite: React.FC<PublicWebsiteProps> = ({
       <AboutFaqContact />
 
       {/* 9. Global Footer */}
-      <Footer />
+      <Footer
+        onOpenAboutModal={onOpenAboutModal}
+        onOpenContactModal={onOpenContactModal}
+      />
     </div>
   );
 };
