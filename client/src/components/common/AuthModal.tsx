@@ -153,7 +153,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
               <img
                 src="/images/logo-hotel.png"
                 alt="HABESHA-HOTEL Logo"
-                onError={e => { (e.currentTarget as HTMLImageElement).src = '/images/logo hotel.png'; }}
+                onError={e => { (e.currentTarget as HTMLImageElement).src = '/images/logo-hotel.png'; }}
                 className="w-16 h-16 object-contain"
               />
             </div>
