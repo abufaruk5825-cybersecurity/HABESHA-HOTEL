@@ -287,6 +287,23 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'about.contact_email': 'Email Us',
     'about.contact_hours': 'Reception Desk: 24/7 Service',
 
+    // ── Location & Map ───────────────────────────────────────────────
+    'location.badge': 'Strategic Prime Location',
+    'location.heading': 'Hotel Location & Interactive Map',
+    'location.subtitle': 'Conveniently situated on Africa Avenue in Bole, Addis Ababa — 5 minutes from Bole International Airport.',
+    'location.address_label': 'Physical Address',
+    'location.address_val': 'Bole Sub-City, Africa Avenue (Bole Road), Addis Ababa, Ethiopia',
+    'location.airport_label': 'Bole International Airport (ADD)',
+    'location.airport_val': '5 Minutes (2.1 km) via Africa Avenue Express',
+    'location.shuttle_label': 'Airport Shuttle Service',
+    'location.shuttle_val': 'Complimentary 24/7 airport pick-up & drop-off',
+    'location.parking_label': 'Parking & Security',
+    'location.parking_val': 'Free secure underground valet parking with 24/7 CCTV',
+    'location.landmarks_label': 'Nearby Landmarks',
+    'location.landmarks_val': 'Millennium Hall (3 min walk), AU Headquarters & UNECA (10 min drive)',
+    'location.get_directions': 'Open in Google Maps',
+    'location.call_concierge': 'Call Concierge Desk',
+
     // ── Global Footer ───────────────────────────────────────────────
     'footer.description': 'A modern 5-star hotel in Bole, Addis Ababa, combining genuine Ethiopian hospitality with luxury suites, authentic cultural dining, and 24/7 guest service.',
     'footer.hospitality_line': 'Authentic Ethiopian Hospitality • Bole, Addis Ababa',
@@ -649,6 +666,23 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'about.contact_phone': 'ስልክ / ዋትስአፕ',
     'about.contact_email': 'ኢሜይል',
     'about.contact_hours': 'ሬሴፕሽን፦ 24 ሰዓት ክፍት ነው',
+
+    // ── Location & Map ───────────────────────────────────────────────
+    'location.badge': 'ተመራጭና ስትራቴጂካዊ መገኛ',
+    'location.heading': 'የሆቴሉ መገኛና ካርታ',
+    'location.subtitle': 'በአዲስ አበባ ቦሌ አፍሪካ ጎዳና ላይ ከቦሌ ዓለም አቀፍ አውሮፕላን ማረፊያ በ5 ደቂቃ ርቀት ላይ የሚገኝ ምርጥ ሆቴል።',
+    'location.address_label': 'ትክክለኛ አድራሻ',
+    'location.address_val': 'ቦሌ ክፍለ ከተማ፣ አፍሪካ ጎዳና (ቦሌ መንገድ)፣ አዲስ አበባ፣ ኢትዮጵያ',
+    'location.airport_label': 'ቦሌ ዓለም አቀፍ አውሮፕላን ማረፊያ',
+    'location.airport_val': 'በአፍሪካ ጎዳና በኩል በ5 ደቂቃ (2.1 ኪ.ሜ) ርቀት ላይ',
+    'location.shuttle_label': 'የአውሮፕላን ማረፊያ ማመላለሻ መኪና',
+    'location.shuttle_val': 'የ24-ሰዓት ነፃ የማመላለሻ አገልግሎት ከተርሚናል 1 እና 2',
+    'location.parking_label': 'የመኪና ማቆሚያና ጥበቃ',
+    'location.parking_val': 'ነፃና አስተማማኝ የመኪና ማቆሚያ ከ24-ሰዓት ካሜራ ጥበቃ ጋር',
+    'location.landmarks_label': 'አቅራቢያ ያሉ ታዋቂ ስፍራዎች',
+    'location.landmarks_val': 'ሚሌኒየም አዳራሽ (3 ደቂቃ የእግር መንገድ)፣ አፍሪካ ህብረትና ኢካ (10 ደቂቃ በመኪና)',
+    'location.get_directions': 'በጉግል ካርታ አቅጣጫ አሳይ',
+    'location.call_concierge': 'ለእንግዳ ተቀባይ ደውል',
 
     // ── Global Footer ───────────────────────────────────────────────
     'footer.description': 'በቦሌ አዲስ አበባ የሚገኝ ባለ 5-ኮከብ ዘመናዊ ሆቴል — እውነተኛ የኢትዮጵያ መስተንግዶን ከቅንጦት ስዊቶች፣ ባህላዊ ምግቦች እና የ24 ሰዓት አገልግሎት ጋር ያቀናጀ።',
