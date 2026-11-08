@@ -58,6 +58,8 @@ export const Footer: React.FC = () => {
               <li><a href="#staff" className="hover:text-amber-400 transition-colors">{language === 'am' ? 'የሆቴሉ እንግዳ ተቀባዮች' : 'Our Ethiopian Hospitality Staff'}</a></li>
               <li><a href="#services" className="hover:text-amber-400 transition-colors">{language === 'am' ? 'የባህር ዛፍ ስቲም እና ማሳጅ ስፓ' : 'Eucalyptus Steam & Massage Spa'}</a></li>
               <li><a href="#services" className="hover:text-amber-400 transition-colors">{language === 'am' ? 'የቦሌ አየር ማረፊያ ማመላለሻ ሹፌር' : 'Bole Airport Pickup Shuttle'}</a></li>
+              <li><a href="#about" className="hover:text-amber-400 transition-colors">{language === 'am' ? 'ስለ እኛ እና የሆቴሉ ታሪክ' : 'About Us & Heritage'}</a></li>
+              <li><a href="#contact" className="hover:text-amber-400 transition-colors">{language === 'am' ? 'የሆቴሉ አድራሻ እና መገኛ ካርታ' : 'Contact & Hotel Location'}</a></li>
             </ul>
           </div>
 
