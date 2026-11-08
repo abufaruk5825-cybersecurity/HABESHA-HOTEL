@@ -294,6 +294,76 @@ export async function syncEthiopianDefaults() {
           );
         }
       }
+
+      // ── 12. SEED BOOKING_ROOMS IF EMPTY ──────────────────────────────────────
+      try {
+        try {
+          await pool.query("ALTER TABLE booking_rooms ADD COLUMN check_in_date DATE");
+        } catch (_) {}
+        try {
+          await pool.query("ALTER TABLE booking_rooms ADD COLUMN check_out_date DATE");
+        } catch (_) {}
+
+        const brCount = await queryOne<{ cnt: number }>("SELECT COUNT(*) as cnt FROM booking_rooms");
+        if (!brCount || brCount.cnt === 0) {
+          try {
+            await pool.query(`
+              INSERT INTO booking_rooms (booking_id, room_id, night_rate, check_in_date, check_out_date)
+              SELECT b.id, b.room_id, b.room_rate, b.check_in_date, b.check_out_date
+              FROM bookings b
+              WHERE b.room_id IS NOT NULL
+            `);
+          } catch (_) {
+            await pool.query(`
+              INSERT INTO booking_rooms (booking_id, room_id, night_rate)
+              SELECT b.id, b.room_id, b.room_rate
+              FROM bookings b
+              WHERE b.room_id IS NOT NULL
+            `);
+          }
+        }
+      } catch (err: any) {
+        console.warn('Warning seeding booking_rooms:', err.message);
+      }
+
+      // ── 13. SEED ROLE_PERMISSIONS IF EMPTY ───────────────────────────────────
+      try {
+        const rpCount = await queryOne<{ cnt: number }>("SELECT COUNT(*) as cnt FROM role_permissions");
+        if (!rpCount || rpCount.cnt === 0) {
+          await pool.query(`
+            INSERT IGNORE INTO role_permissions (role_id, permission_id)
+            SELECT r.id, p.id FROM roles r, permissions p
+            WHERE r.name IN ('admin', 'superadmin')
+          `);
+          await pool.query(`
+            INSERT IGNORE INTO role_permissions (role_id, permission_id)
+            SELECT r.id, p.id FROM roles r, permissions p
+            WHERE r.name = 'manager' AND p.code IN ('rooms.manage', 'bookings.manage', 'checkin.process', 'housekeeping.manage', 'reports.view')
+          `);
+          await pool.query(`
+            INSERT IGNORE INTO role_permissions (role_id, permission_id)
+            SELECT r.id, p.id FROM roles r, permissions p
+            WHERE r.name = 'receptionist' AND p.code IN ('bookings.manage', 'checkin.process', 'rooms.manage')
+          `);
+          await pool.query(`
+            INSERT IGNORE INTO role_permissions (role_id, permission_id)
+            SELECT r.id, p.id FROM roles r, permissions p
+            WHERE r.name = 'accountant' AND p.code IN ('finance.manage', 'reports.view', 'bookings.manage')
+          `);
+          await pool.query(`
+            INSERT IGNORE INTO role_permissions (role_id, permission_id)
+            SELECT r.id, p.id FROM roles r, permissions p
+            WHERE r.name = 'housekeeper' AND p.code = 'housekeeping.manage'
+          `);
+          await pool.query(`
+            INSERT IGNORE INTO role_permissions (role_id, permission_id)
+            SELECT r.id, p.id FROM roles r, permissions p
+            WHERE r.name = 'customer' AND p.code = 'bookings.manage'
+          `);
+        }
+      } catch (err: any) {
+        console.warn('Warning seeding role_permissions:', err.message);
+      }
     } catch (_) {}
   } catch (e) {
     // Ignore if not applicable
