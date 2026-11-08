@@ -157,3 +157,15 @@ Inside any management dashboard, look at the top navigation bar next to your pro
 4. Input **Resolution Notes** (e.g. complimentary fruit basket, room upgrade, dinner voucher).
 5. Click **Resolve Complaint**. The system archives the complaint and notifies the guest.
 
+---
+
+## 8. Direct Guest Communication & Official Channels
+
+Guests and partners can communicate directly with hotel management via official digital channels:
+- **Telegram Direct Channel**: [`@Abuzubeir1234`](https://t.me/Abuzubeir1234) — 24/7 instant messaging for urgent bookings, airport pickups, and direct concierge service.
+- **Instagram Official Profile**: [`@seyaman5825`](https://instagram.com/seyaman5825) — Visual hotel showcase, VIP suite inquiries, and direct messaging (DM).
+- **Reception Phone**: `+251 11 667 8000` (24/7 front desk hotline).
+- **Hotel Email**: `reservations@habeshahotel.com`.
+- **Location**: Bole Sub-City, Africa Avenue (Bole Road), Addis Ababa, Ethiopia (5 min from Bole Airport).
+
+
