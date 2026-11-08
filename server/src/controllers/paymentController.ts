@@ -160,3 +160,99 @@ export async function getInvoiceById(req: AuthRequest, res: Response) {
     return res.status(500).json({ error: 'Failed to fetch invoice details' });
   }
 }
+
+export async function getRefunds(req: AuthRequest, res: Response) {
+  try {
+    const { booking_id, status } = req.query;
+    let sql = `
+      SELECT r.*, p.payment_reference, b.booking_reference, c.full_name as customer_name,
+             u.full_name as processed_by_name
+      FROM refunds r
+      JOIN payments p ON r.payment_id = p.id
+      JOIN bookings b ON r.booking_id = b.id
+      JOIN customers c ON b.customer_id = c.id
+      LEFT JOIN users u ON r.processed_by = u.id
+      WHERE 1=1
+    `;
+    const params: any[] = [];
+    if (booking_id) { sql += ' AND r.booking_id = ?'; params.push(booking_id); }
+    if (status)     { sql += ' AND r.status = ?'; params.push(status); }
+
+    sql += ' ORDER BY r.created_at DESC';
+    const refunds = await query(sql, params);
+    return res.json(refunds);
+  } catch (error: any) {
+    console.error('getRefunds error:', error);
+    return res.status(500).json({ error: 'Failed to fetch refunds' });
+  }
+}
+
+export async function recordRefund(req: AuthRequest, res: Response) {
+  try {
+    const { payment_id, amount, reason, refund_method = 'telebirr', notes } = req.body;
+    if (!payment_id || !amount || Number(amount) <= 0 || !reason) {
+      return res.status(400).json({ error: 'Payment ID, refund amount (> 0), and reason are required' });
+    }
+
+    const payment = await queryOne<any>('SELECT * FROM payments WHERE id = ?', [payment_id]);
+    if (!payment) return res.status(404).json({ error: 'Payment record not found' });
+
+    const refundAmount = parseFloat(Number(amount).toFixed(2));
+    const year = new Date().getFullYear();
+    const refNum = `REF-${year}-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    const conn = await pool.getConnection();
+    try {
+      await conn.beginTransaction();
+
+      const [r]: any = await conn.execute(
+        `INSERT INTO refunds (refund_number, payment_id, booking_id, amount, currency, refund_method, reason, status, processed_by, notes)
+         VALUES (?, ?, ?, ?, 'ETB', ?, ?, 'completed', ?, ?)`,
+        [refNum, payment_id, payment.booking_id, refundAmount, refund_method, reason, req.user?.id || null, notes || null]
+      );
+
+      // Update payment status if full or partial refund
+      await conn.execute("UPDATE payments SET status = 'refunded' WHERE id = ?", [payment_id]);
+
+      // Deduct from booking paid_amount
+      const booking = await queryOne<any>('SELECT paid_amount, total_amount FROM bookings WHERE id = ?', [payment.booking_id]);
+      if (booking) {
+        const updatedPaid = Math.max(0, parseFloat((Number(booking.paid_amount) - refundAmount).toFixed(2)));
+        const payStatus = updatedPaid <= 0 ? 'refunded' : 'partially_paid';
+        await conn.execute("UPDATE bookings SET paid_amount = ?, payment_status = ? WHERE id = ?", [updatedPaid, payStatus, payment.booking_id]);
+      }
+
+      await conn.commit();
+      logAudit(req.user?.id || null, req.user?.role || 'accountant', 'REFUND_PROCESS', 'refunds', r.insertId, `Processed refund of ${refundAmount} ETB for booking #${payment.booking_id}. Reason: ${reason}`);
+      return res.status(201).json({ message: 'Refund processed successfully', refund_number: refNum });
+    } catch (err) {
+      await conn.rollback();
+      throw err;
+    } finally {
+      conn.release();
+    }
+  } catch (error: any) {
+    console.error('recordRefund error:', error);
+    return res.status(500).json({ error: 'Failed to process refund' });
+  }
+}
+
+export async function getPaymentMethods(_req: Request, res: Response) {
+  try {
+    const methods = await query('SELECT * FROM payment_methods WHERE is_active = 1 ORDER BY id ASC');
+    return res.json(methods);
+  } catch (error: any) {
+    console.error('getPaymentMethods error:', error);
+    return res.status(500).json({ error: 'Failed to fetch payment methods' });
+  }
+}
+
+export async function getDiscounts(_req: Request, res: Response) {
+  try {
+    const discounts = await query('SELECT * FROM discounts WHERE is_active = 1 AND valid_until >= CURDATE() ORDER BY id ASC');
+    return res.json(discounts);
+  } catch (error: any) {
+    console.error('getDiscounts error:', error);
+    return res.status(500).json({ error: 'Failed to fetch discounts' });
+  }
+}
