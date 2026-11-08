@@ -107,7 +107,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
             src="/images/logo-hotel.png"
             alt="HABESHA-HOTEL"
             className="w-8 h-8 object-contain rounded-lg border border-amber-500/30 flex-shrink-0"
-            onError={e => { (e.currentTarget as HTMLImageElement).src = '/images/logo hotel.png'; }}
+            onError={e => { (e.currentTarget as HTMLImageElement).src = '/images/logo-hotel.png'; }}
           />
           {!sidebarCollapsed && (
             <div className="min-w-0 flex-1">
