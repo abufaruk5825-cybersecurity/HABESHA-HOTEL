@@ -54,7 +54,7 @@ export const ReviewsSection: React.FC = () => {
   };
 
   return (
-    <section id="reviews" className="py-24 bg-slate-900 text-slate-100 relative">
+    <section id="reviews" className="scroll-mt-24 py-24 bg-slate-900 text-slate-100 relative">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-16">
