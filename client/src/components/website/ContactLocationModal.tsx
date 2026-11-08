@@ -84,7 +84,7 @@ export const ContactLocationModal: React.FC<ContactLocationModalProps> = ({
               src="/images/logo-hotel.png"
               alt="HABESHA-HOTEL Logo"
               onError={(e) => {
-                (e.currentTarget as HTMLImageElement).src = '/images/logo hotel.png';
+                (e.currentTarget as HTMLImageElement).src = '/images/logo-hotel.png';
               }}
               className="h-9 w-auto object-contain rounded-lg border border-amber-500/30 bg-slate-900 p-1"
             />
