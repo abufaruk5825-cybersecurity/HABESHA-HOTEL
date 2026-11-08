@@ -331,7 +331,7 @@ export const HousekeepingDashboard: React.FC<HousekeepingDashboardProps> = ({ on
               <img
                 src="/images/logo-hotel.png"
                 alt="HABESHA-HOTEL"
-                onError={e => { (e.currentTarget as HTMLImageElement).src = '/images/logo hotel.png'; }}
+                onError={e => { (e.currentTarget as HTMLImageElement).src = '/images/logo-hotel.png'; }}
                 className="w-11 h-11 object-contain rounded-xl border border-amber-500/30 shadow-md"
               />
               <div>
