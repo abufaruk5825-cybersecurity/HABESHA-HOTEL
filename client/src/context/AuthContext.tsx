@@ -32,6 +32,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     hotel_phone: '+251 11 667 8000',
     hotel_email: 'reservations@habeshahotel.com',
     hotel_address: 'Bole Sub-City, Africa Avenue, Addis Ababa, Ethiopia',
+    hotel_telegram: '@Abuzubeir1234',
+    hotel_telegram_link: 'https://t.me/Abuzubeir1234',
+    hotel_instagram: 'seyaman5825',
+    hotel_instagram_link: 'https://instagram.com/seyaman5825',
   });
 
   const fetchSettings = async () => {
