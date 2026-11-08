@@ -38,6 +38,8 @@ interface NavbarProps {
   onNavigate: (view: string) => void;
   onOpenBookingModal: (roomTypeId?: number) => void;
   onOpenAuthModal: () => void;
+  onOpenAboutModal?: () => void;
+  onOpenContactModal?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -45,6 +47,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onNavigate,
   onOpenBookingModal,
   onOpenAuthModal,
+  onOpenAboutModal,
+  onOpenContactModal,
 }) => {
   const { user, logout, notifications, unreadCount, markNotificationRead, hotelSettings } = useAuth();
   const { t, language } = useLanguage();
@@ -121,21 +125,37 @@ export const Navbar: React.FC<NavbarProps> = ({
     setAboutDropdownOpen(false);
     setShowMobileMenu(false);
 
-    if (currentView !== 'website') {
-      onNavigate('website');
-      setTimeout(() => {
-        if (sectionId === 'home') {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 150);
-    } else {
+    const performScroll = () => {
       if (sectionId === 'home') {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+        return;
       }
+      const el =
+        document.getElementById(sectionId) ||
+        (sectionId === 'location' ? document.getElementById('contact') : null) ||
+        (sectionId === 'contact' ? document.getElementById('location') : null);
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    };
+
+    if (currentView !== 'website') {
+      onNavigate('website');
+      let attempts = 0;
+      const interval = setInterval(() => {
+        attempts++;
+        const target =
+          sectionId === 'home'
+            ? document.body
+            : (document.getElementById(sectionId) || document.getElementById('contact') || document.getElementById('location'));
+        if (target || attempts > 15) {
+          clearInterval(interval);
+          performScroll();
+        }
+      }, 50);
+    } else {
+      performScroll();
     }
   };
 
@@ -354,27 +374,47 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
 
             {aboutDropdownOpen && (
-              <div className="absolute top-full left-0 mt-1 w-56 bg-slate-900 border border-slate-700/80 rounded-xl shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+              <div className="absolute top-full left-0 mt-1 w-60 bg-slate-900 border border-slate-700/80 rounded-xl shadow-2xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
                 <button
-                  onClick={() => scrollToSection('about')}
-                  className="w-full text-left px-4 py-2 text-xs text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 flex items-center gap-2.5 transition-colors"
+                  onClick={() => {
+                    setAboutDropdownOpen(false);
+                    onOpenAboutModal?.();
+                    scrollToSection('about');
+                  }}
+                  className="w-full text-left px-4 py-2.5 text-xs text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 flex items-center gap-2.5 transition-colors cursor-pointer"
                 >
                   <Info className="w-4 h-4 text-amber-400" />
-                  <span>{t('nav.about_heritage', 'About Us & Heritage')}</span>
+                  <div>
+                    <span className="block font-bold">{t('nav.about_heritage', 'About Us & Heritage')}</span>
+                    <span className="block text-[10px] text-slate-400">Culture, coffee ceremony & luxury suites</span>
+                  </div>
                 </button>
                 <button
-                  onClick={() => scrollToSection('reviews')}
-                  className="w-full text-left px-4 py-2 text-xs text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 flex items-center gap-2.5 transition-colors border-t border-slate-800/80"
+                  onClick={() => {
+                    setAboutDropdownOpen(false);
+                    scrollToSection('reviews');
+                  }}
+                  className="w-full text-left px-4 py-2.5 text-xs text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 flex items-center gap-2.5 transition-colors border-t border-slate-800/80 cursor-pointer"
                 >
                   <Crown className="w-4 h-4 text-amber-400" />
-                  <span>{t('nav.reviews', 'Guest Reviews')}</span>
+                  <div>
+                    <span className="block font-bold">{t('nav.reviews', 'Guest Reviews')}</span>
+                    <span className="block text-[10px] text-slate-400">Verified guest stays & ratings</span>
+                  </div>
                 </button>
                 <button
-                  onClick={() => scrollToSection('contact')}
-                  className="w-full text-left px-4 py-2 text-xs text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 flex items-center gap-2.5 transition-colors border-t border-slate-800/80"
+                  onClick={() => {
+                    setAboutDropdownOpen(false);
+                    onOpenContactModal?.();
+                    scrollToSection('contact');
+                  }}
+                  className="w-full text-left px-4 py-2.5 text-xs text-slate-300 hover:text-amber-400 hover:bg-slate-800/70 flex items-center gap-2.5 transition-colors border-t border-slate-800/80 cursor-pointer"
                 >
                   <Mail className="w-4 h-4 text-amber-400" />
-                  <span>{t('nav.contact', 'Contact & Location')}</span>
+                  <div>
+                    <span className="block font-bold">{t('nav.contact', 'Contact & Location')}</span>
+                    <span className="block text-[10px] text-slate-400">Bole Africa Ave map, airport & contacts</span>
+                  </div>
                 </button>
                 <div className="px-4 py-2.5 border-t border-slate-800/80 flex items-center justify-between">
                   <span className="text-[11px] text-slate-400 font-medium">
@@ -647,23 +687,31 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
 
             <button
-              onClick={() => scrollToSection('about')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors text-left ${
+              onClick={() => {
+                setShowMobileMenu(false);
+                onOpenAboutModal?.();
+                scrollToSection('about');
+              }}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors text-left cursor-pointer ${
                 activeSection === 'about' && currentView === 'website' ? 'bg-amber-500/15 text-amber-400' : 'text-slate-300 hover:text-white'
               }`}
             >
               <Info className="w-4 h-4 text-amber-400" />
-              <span>{t('nav.about', 'About Us')}</span>
+              <span>{t('nav.about_heritage', 'About Us & Heritage')}</span>
             </button>
 
             <button
-              onClick={() => scrollToSection('contact')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors text-left ${
+              onClick={() => {
+                setShowMobileMenu(false);
+                onOpenContactModal?.();
+                scrollToSection('contact');
+              }}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors text-left cursor-pointer ${
                 activeSection === 'contact' && currentView === 'website' ? 'bg-amber-500/15 text-amber-400' : 'text-slate-300 hover:text-white'
               }`}
             >
               <Mail className="w-4 h-4 text-amber-400" />
-              <span>{t('nav.contact', 'Contact Us')}</span>
+              <span>{t('nav.contact', 'Contact & Location')}</span>
             </button>
 
             {/* Mobile Direct Social Channels - Icon Only */}
