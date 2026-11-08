@@ -26,7 +26,9 @@ Complete, professional, university-grade documentation is located in the [**`doc
 | **Complete Project Report** | [`docs/PROJECT_REPORT.md`](./docs/PROJECT_REPORT.md) | Six-chapter formal thesis: Introduction, System Analysis, System Design, Implementation, Testing & Test Cases, Conclusion & Recommendations. |
 | **Software Requirements Specification** | [`docs/SRS.md`](./docs/SRS.md) | Complete functional and non-functional requirements, user class matrices, and hardware/software specifications. |
 | **Software Design Document** | [`docs/SDD.md`](./docs/SDD.md) | Three-tier architecture, component decomposition, database transactions, and scoped theme isolation. |
-| **Database Documentation** | [`docs/DATABASE_DOCUMENTATION.md`](./docs/DATABASE_DOCUMENTATION.md) | 27 normalized relational tables (3NF), data dictionary, ERD, foreign key cascades, and indexes. |
+| **Database Documentation** | [`docs/DATABASE_DOCUMENTATION.md`](./docs/DATABASE_DOCUMENTATION.md) | 37 normalized relational tables (3NF), data dictionary, ERD, foreign key cascades, and indexes. |
+| **Database Table Reference** | [`docs/DATABASE_TABLE_REFERENCE.md`](./docs/DATABASE_TABLE_REFERENCE.md) | Master table & column reference specification for all 37 tables with visual cards and cascade rules. |
+| **Entity Relationship Diagram** | [`docs/ER_DIAGRAM.md`](./docs/ER_DIAGRAM.md) | High-resolution visual ERD diagram and relation mapping for all 37 database tables. |
 | **REST API Reference** | [`docs/API_DOCUMENTATION.md`](./docs/API_DOCUMENTATION.md) | Complete endpoint catalog, methods, headers, request bodies, query parameters, and JSON responses. |
 | **User Manual** | [`docs/USER_MANUAL.md`](./docs/USER_MANUAL.md) | Step-by-step operational workflows for Guests, Receptionists, Housekeeping, Maintenance, Accountants, and Managers. |
 | **Administrator & Super Admin Manual** | [`docs/ADMINISTRATOR_MANUAL.md`](./docs/ADMINISTRATOR_MANUAL.md) | User account lifecycle, RBAC permissions matrix, branch governance, global settings, and immutable audit logs. |
@@ -51,35 +53,62 @@ The system includes pre-seeded accounts representing all eight operational roles
 
 ---
 
-## 4. Normalized 27-Table MySQL Database Schema
+## 4. Normalized 37-Table MySQL Database Schema
 
-1. `roles` — System access roles
-2. `permissions` — Granular system capabilities
-3. `role_permissions` — Associative RBAC mapping
-4. `users` — User credentials and authentication profiles
+The database consists of **37 normalized relational tables (3NF)** organized into eight interconnected operational subsystems:
+
+### Module 1: Core Security & Access Control (RBAC)
+1. `roles` — System authorization tiers (7 distinct roles: superadmin, admin, manager, receptionist, accountant, housekeeper, customer)
+2. `permissions` — Granular system capabilities and action permissions
+3. `role_permissions` — Associative RBAC mapping between roles and permissions
+4. `users` — User credentials, Bcrypt password hashes, and profile metadata
+
+### Module 2: Staff & Human Resources Operations
 5. `departments` — Hotel administrative and operational departments
-6. `employees` — Staff employment records, positions, and salaries
-7. `customers` — Guest identity, passport/ID numbers, and contact details
-8. `room_types` — Specifications, capacities, bed types, and galleries
-9. `rooms` — Physical room inventory with operational and cleanliness states
-10. `amenities` — Hotel amenities catalog
-11. `room_amenities` — Room-amenity associative mapping
-12. `bookings` — Master reservation ledger
-13. `booking_rooms` — Multi-room booking allocations
-14. `booking_guests` — Occupant names under single reservations
-15. `payments` — Transaction records with Telebirr, CBE Birr, Card, and Cash methods
-16. `invoices` — Official tax folios with 12% hospitality tax
-17. `invoice_items` — Itemized room tariffs, dining, and spa line items
-18. `hotel_services` — Extra services and authentic Ethiopian dining menu
-19. `service_orders` — In-room dining and service orders
-20. `housekeeping_tasks` — Cleaning turnover priority queue
-21. `maintenance_requests` — Engineering work orders and defect tracking
-22. `reviews` — Verified guest ratings (1-5 stars) and testimonials
-23. `notifications` — Real-time in-app user notifications
-24. `complaints` — Service recovery tickets and management resolution notes
-25. `audit_logs` — Immutable forensic security audit trail
-26. `hotel_settings` — Key-value system configuration (Taxes, policies, contacts)
-27. `expenses` — Operational expense tracking ledger for accountants
+6. `employees` — Staff employment profiles, positions, compensation, and hire dates
+7. `shifts` — Operational working shifts (Morning, Evening, Night)
+8. `staff_schedules` — Employee weekly shift rosters and department assignments
+9. `staff_attendance` — Biometric/clock-in timesheet records and attendance logs
+
+### Module 3: Guest Management
+10. `customers` — Registered guest profiles, national ID/passport numbers, and preferences
+
+### Module 4: Rooms & Amenities Management
+11. `room_types` — Specifications, capacities, base pricing in ETB, and photo galleries
+12. `rooms` — Physical room inventory with operational conditions and cleaning states
+13. `amenities` — Available room features and hotel facilities catalog
+14. `room_amenities` — Associative mapping between room types and amenities
+15. `room_status_history` — Audit trail for room condition and availability transitions
+
+### Module 5: Reservations Subsystem
+16. `bookings` — Master reservation ledger with ETB currency standard
+17. `booking_rooms` — Multi-room booking allocations and nightly room rates
+18. `booking_guests` — Manifest of staying guest occupants under reservations
+19. `booking_status_history` — Reservation lifecycle state progression log
+
+### Module 6: Finance, Billing & Accounting
+20. `payment_methods` — Supported payment channels (Telebirr, CBE Birr, Bank Wire, Card, Cash)
+21. `payments` — Transaction records with multi-channel payment integration
+22. `refunds` — Cancellation and customer refund ledger
+23. `invoices` — Official tax folios with 12% hospitality tax & line-item totals
+24. `invoice_items` — Itemized room tariffs, dining, and spa line items
+25. `expenses` — Operational expense tracking ledger for accountants
+26. `discounts` — Promotional discount vouchers and seasonal incentive codes
+
+### Module 7: Hotel Operations & Services
+27. `hotel_services` — Extra services catalog and authentic Ethiopian dining menu
+28. `service_orders` — In-room dining orders and guest service requests
+29. `housekeeping_tasks` — Room cleaning turnover priority queue and inspection logs
+30. `maintenance_requests` — Facility repair work orders and engineering defect tracking
+31. `inventory` — Hotel consumables catalog (linens, toiletries, F&B supplies, parts)
+32. `inventory_transactions` — Stock audit trail (purchases, usage, write-offs, adjustments)
+
+### Module 8: Guest Experience & System Governance
+33. `reviews` — Verified guest ratings (1-5 stars) and testimonials
+34. `complaints` — Service recovery tickets and management resolution notes
+35. `notifications` — Real-time in-app user notifications and alerts
+36. `audit_logs` — Immutable forensic security audit trail (68+ events logged)
+37. `hotel_settings` — Dynamic hotel metadata and configuration (Taxes, contacts, social handles)
 
 ---
 
@@ -117,7 +146,7 @@ DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
 DB_PASSWORD=your_mysql_password
-DB_NAME=habesha_hotel_db
+DB_NAME=shms
 JWT_SECRET=habesha_hotel_jwt_super_secret_key_2026_shms
 NODE_ENV=development
 ```
