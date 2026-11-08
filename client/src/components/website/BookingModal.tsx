@@ -331,7 +331,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               src="/images/logo-hotel.png"
               alt="HABESHA-HOTEL Logo"
               onError={(e) => {
-                (e.currentTarget as HTMLImageElement).src = '/images/logo hotel.png';
+                (e.currentTarget as HTMLImageElement).src = '/images/logo-hotel.png';
               }}
               className="w-9 h-9 object-contain rounded-lg border border-amber-500/20"
             />
