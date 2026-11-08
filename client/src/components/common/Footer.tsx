@@ -3,7 +3,15 @@ import { Crown, ShieldCheck, Award, Heart, Send, Instagram, Phone, Mail, Externa
 import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onOpenAboutModal?: () => void;
+  onOpenContactModal?: () => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({
+  onOpenAboutModal,
+  onOpenContactModal,
+}) => {
   const { hotelSettings } = useAuth();
   const { t, language } = useLanguage();
 
@@ -87,8 +95,30 @@ export const Footer: React.FC = () => {
               <li><a href="#staff" className="hover:text-amber-400 transition-colors">{language === 'am' ? 'የሆቴሉ እንግዳ ተቀባዮች' : 'Our Ethiopian Hospitality Staff'}</a></li>
               <li><a href="#services" className="hover:text-amber-400 transition-colors">{language === 'am' ? 'የባህር ዛፍ ስቲም እና ማሳጅ ስፓ' : 'Eucalyptus Steam & Massage Spa'}</a></li>
               <li><a href="#services" className="hover:text-amber-400 transition-colors">{language === 'am' ? 'የቦሌ አየር ማረፊያ ማመላለሻ ሹፌር' : 'Bole Airport Pickup Shuttle'}</a></li>
-              <li><a href="#about" className="hover:text-amber-400 transition-colors">{language === 'am' ? 'ስለ እኛ እና የሆቴሉ ታሪክ' : 'About Us & Heritage'}</a></li>
-              <li><a href="#contact" className="hover:text-amber-400 transition-colors">{language === 'am' ? 'የሆቴሉ አድራሻ እና መገኛ ካርታ' : 'Contact & Hotel Location'}</a></li>
+              <li>
+                <button
+                  onClick={() => {
+                    onOpenAboutModal?.();
+                    const el = document.getElementById('about');
+                    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+                  }}
+                  className="hover:text-amber-400 transition-colors cursor-pointer text-left"
+                >
+                  {language === 'am' ? 'ስለ እኛ እና የሆቴሉ ታሪክ' : 'About Us & Heritage'}
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => {
+                    onOpenContactModal?.();
+                    const el = document.getElementById('contact') || document.getElementById('location');
+                    if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
+                  }}
+                  className="hover:text-amber-400 transition-colors cursor-pointer text-left"
+                >
+                  {language === 'am' ? 'የሆቴሉ አድራሻ እና መገኛ ካርታ' : 'Contact & Hotel Location'}
+                </button>
+              </li>
             </ul>
           </div>
 
