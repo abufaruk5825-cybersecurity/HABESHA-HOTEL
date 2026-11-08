@@ -80,6 +80,8 @@ erDiagram
     PAYMENTS ||--o{ REFUNDS : "reverses"
     BOOKINGS ||--|| INVOICES : "billed via"
     INVOICES ||--o{ INVOICE_ITEMS : "itemizes"
+    INVOICES ||--o{ DISCOUNTS : "applies promo code"
+    USERS ||--o{ EXPENSES : "records operational cost"
     BOOKINGS ||--o{ SERVICE_ORDERS : "orders"
     HOTEL_SERVICES ||--o{ SERVICE_ORDERS : "ordered"
     ROOMS ||--o{ HOUSEKEEPING_TASKS : "requires cleaning"
@@ -91,6 +93,7 @@ erDiagram
     CUSTOMERS ||--o{ COMPLAINTS : "files"
     USERS ||--o{ NOTIFICATIONS : "receives"
     USERS ||--o{ AUDIT_LOGS : "triggers forensic log"
+    USERS ||--o{ HOTEL_SETTINGS : "configures master settings"
 ```
 
 ---
@@ -658,3 +661,100 @@ erDiagram
 | 5 | `category` | `VARCHAR(50)` | NOT NULL, DEFAULT 'general' | System attribute |
 | 6 | `updated_at` | `DATETIME` | DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP | Last update timestamp |
 
+
+
+---
+
+## 5. Entity Cardinality & Multiplicity Matrix
+
+The Habesha Hotel Management System enforces strict relational cardinality across its 10 business domains:
+
+| # | Source Entity & Foreign Key | Target Entity & Primary Key | Cardinality | Multiplicity | Business Semantics & Enforced Rule |
+|---|---|---|:---:|:---:|---|
+| 1 | `role_permissions.role_id` | `roles.id` | **M : N** | `1 role has many permissions` | Junction table mapping RBAC roles to fine-grained access privileges |
+| 2 | `role_permissions.permission_id` | `permissions.id` | **M : N** | `1 perm assigned to many roles` | Junction table mapping fine-grained permissions to roles |
+| 3 | `employees.user_id` | `users.id` | **1 : 1** | `1 user ↔ 0..1 employee` | Enforces unique staff login identity via `UNIQUE KEY (user_id)` |
+| 4 | `employees.department_id` | `departments.id` | **1 : N** | `1 dept has many employees` | Departmental workforce assignment |
+| 5 | `customers.user_id` | `users.id` | **1 : 1** | `1 user ↔ 0..1 customer` | Optional portal account binding for registered hotel guests |
+| 6 | `rooms.room_type_id` | `room_types.id` | **1 : N** | `1 type has many rooms` | Architectural classification (Single, Double, Twin, Suite) |
+| 7 | `room_amenities.room_id` | `rooms.id` | **M : N** | `1 room has many amenities` | Composite PK junction allocating luxury amenities to rooms |
+| 8 | `room_amenities.amenity_id` | `amenities.id` | **M : N** | `1 amenity equipped in rooms` | Reusable master amenities (Wi-Fi, Jacuzzi, Balcony, etc.) |
+| 9 | `room_status_history.room_id` | `rooms.id` | **1 : N** | `1 room has audit trail` | Tracks room transitions (available, cleaning, maintenance) |
+| 10 | `room_status_history.changed_by` | `users.id` | **1 : N** | `1 user updates many rooms` | Forensic signature of staff member triggering status change |
+| 11 | `bookings.customer_id` | `customers.id` | **1 : N** | `1 customer places bookings` | Guest reservation association |
+| 12 | `bookings.room_id` | `rooms.id` | **1 : N** | `1 room booked across dates` | Primary room allocation shortcut |
+| 13 | `bookings.checked_in_by` | `users.id` | **1 : N** | `1 clerk checks in guests` | Front desk staff audit tracking for check-in |
+| 14 | `bookings.checked_out_by` | `users.id` | **1 : N** | `1 clerk checks out guests` | Front desk staff audit tracking for check-out |
+| 15 | `booking_rooms.booking_id` | `bookings.id` | **M : N** | `1 booking reserves rooms` | Multi-room group and family booking junction table |
+| 16 | `booking_rooms.room_id` | `rooms.id` | **M : N** | `1 room allocated to stays` | Specific room allocation with date and rate snapshots |
+| 17 | `booking_guests.booking_id` | `bookings.id` | **1 : N** | `1 booking has occupants` | Manifest of all staying guests (family, primary, companions) |
+| 18 | `booking_status_history.booking_id` | `bookings.id` | **1 : N** | `1 booking has transitions` | Lifecycle audit (pending → confirmed → checked_in → checked_out) |
+| 19 | `booking_status_history.changed_by` | `users.id` | **1 : N** | `1 user changes status` | Operator ID logging reservation mutations |
+| 20 | `payments.booking_id` | `bookings.id` | **1 : N** | `1 booking receives payments` | Supports split and partial payments (Telebirr, CBE, cash) |
+| 21 | `payments.recorded_by` | `users.id` | **1 : N** | `1 cashier records payments` | Cashier/receptionist audit tracking |
+| 22 | `refunds.payment_id` | `payments.id` | **1 : N** | `1 payment can be refunded` | Financial reversal linking to original settlement transaction |
+| 23 | `refunds.booking_id` | `bookings.id` | **1 : N** | `1 booking tracks refunds` | Reservation balance adjustment tracking |
+| 24 | `refunds.processed_by` | `users.id` | **1 : N** | `1 manager approves refund` | Managerial authorization audit for financial reversals |
+| 25 | `invoices.booking_id` | `bookings.id` | **1 : 1** | `1 booking ↔ 1 invoice` | Unique 1:1 master billing statement (`UNIQUE (booking_id)`) |
+| 26 | `invoices.customer_id` | `customers.id` | **1 : N** | `1 guest billed on invoice` | Customer ledger link |
+| 27 | `invoice_items.invoice_id` | `invoices.id` | **1 : N** | `1 invoice has line items` | Itemized charges (room charges, restaurant, spa, taxes) |
+| 28 | `expenses.recorded_by` | `users.id` | **1 : N** | `1 accountant logs costs` | Operational expenditure ledger (utilities, maintenance, supplies) |
+| 29 | `service_orders.booking_id` | `bookings.id` | **1 : N** | `1 stay orders room service` | Guest ancillary consumption charged to hotel room folio |
+| 30 | `service_orders.service_id` | `hotel_services.id` | **1 : N** | `1 service ordered multiple times` | Catalog lookup (Cultural dining, Buna Tetu, Airport transfer) |
+| 31 | `service_orders.ordered_by` | `users.id` | **1 : N** | `1 user submits order` | User or front-desk clerk placing the service order |
+| 32 | `housekeeping_tasks.room_id` | `rooms.id` | **1 : N** | `1 room cleaned repeatedly` | Room cleaning dispatch and turnaround management |
+| 33 | `housekeeping_tasks.assigned_employee_id` | `employees.id` | **1 : N** | `1 staff assigned tasks` | Housekeeping staff task assignment |
+| 34 | `maintenance_requests.room_id` | `rooms.id` | **1 : N** | `1 room repaired as needed` | Facility maintenance log (plumbing, HVAC, electrical) |
+| 35 | `maintenance_requests.reported_by` | `users.id` | **1 : N** | `1 user reports issue` | Originating reporter of maintenance fault |
+| 36 | `maintenance_requests.technician_id` | `employees.id` | **1 : N** | `1 technician repairs faults` | Assigned maintenance engineering staff |
+| 37 | `staff_schedules.employee_id` | `employees.id` | **1 : N** | `1 employee has shifts` | Weekly/monthly roster allocation |
+| 38 | `staff_schedules.shift_id` | `shifts.id` | **1 : N** | `1 shift scheduled across staff`| Master shift template (Morning, Afternoon, Night) |
+| 39 | `staff_schedules.department_id` | `departments.id` | **1 : N** | `1 dept has scheduled roster`| Departmental workforce tracking |
+| 40 | `staff_attendance.employee_id` | `employees.id` | **1 : N** | `1 employee logs attendance` | Daily biometric/clock-in ledger |
+| 41 | `staff_attendance.schedule_id` | `staff_schedules.id` | **1 : N** | `1 schedule verified in clock`| Matches actual clock-in against rostered shift |
+| 42 | `staff_attendance.recorded_by` | `users.id` | **1 : N** | `1 supervisor logs clock-in` | HR attendance validation signature |
+| 43 | `inventory_transactions.inventory_id` | `inventory.id` | **1 : N** | `1 item tracked over time` | Material movement (purchase_in, usage_out, waste_loss) |
+| 44 | `inventory_transactions.department_id` | `departments.id` | **1 : N** | `1 dept consumes materials` | Departmental cost center assignment for supplies |
+| 45 | `inventory_transactions.recorded_by` | `users.id` | **1 : N** | `1 storekeeper logs transfer`| Storekeeper operational signature |
+| 46 | `reviews.customer_id` | `customers.id` | **1 : N** | `1 customer writes reviews` | Verified guest testimonial management |
+| 47 | `reviews.booking_id` | `bookings.id` | **1 : N** | `1 stay generates review` | Verifies stay authenticity before review publication |
+| 48 | `reviews.room_type_id` | `room_types.id` | **1 : N** | `1 room type receives ratings`| Aggregate rating calculation for accommodations |
+| 49 | `complaints.customer_id` | `customers.id` | **1 : N** | `1 customer files complaints`| Guest issue ticket tracking |
+| 50 | `complaints.booking_id` | `bookings.id` | **1 : N** | `1 booking has complaints` | Ticket association to specific stay |
+| 51 | `complaints.department_id` | `departments.id` | **1 : N** | `1 dept receives tickets` | Route ticket to responsible department |
+| 52 | `complaints.resolved_by` | `users.id` | **1 : N** | `1 manager closes complaint` | Duty manager resolution audit signature |
+| 53 | `notifications.user_id` | `users.id` | **1 : N** | `1 user receives alerts` | System push notifications and alert queue |
+| 54 | `audit_logs.user_id` | `users.id` | **1 : N** | `1 user triggers audit log` | Enterprise immutable forensic security logging |
+
+---
+
+## 6. Referential Integrity & Cascade Action Rules
+
+MySQL 8.0 / InnoDB enforces ACID compliance across the database using three distinct referential actions:
+
+1. **`ON DELETE CASCADE` (Parent Deletion Purges Dependent Children):**
+   - Used where children have no independent business existence outside their parent entity:
+     - `role_permissions` $\rightarrow$ deleted if `roles` or `permissions` deleted.
+     - `booking_rooms`, `booking_guests`, `booking_status_history` $\rightarrow$ purged if parent `bookings` record deleted.
+     - `invoice_items` $\rightarrow$ purged if master `invoices` statement deleted.
+     - `room_amenities` $\rightarrow$ purged if `rooms` or `amenities` deleted.
+     - `staff_schedules`, `staff_attendance` $\rightarrow$ purged if staff `employees` profile deleted.
+     - `notifications` $\rightarrow$ purged if `users` profile deleted.
+
+2. **`ON DELETE RESTRICT` (Prevents Accidental Deletion of Critical Reference Data):**
+   - Guarantees financial and operational records cannot be corrupted by deleting referenced masters:
+     - Cannot delete a `room_types` if `rooms` exist.
+     - Cannot delete a `customers` profile if active `bookings` or `invoices` exist.
+     - Cannot delete a `rooms` record if historical `bookings` reference it.
+     - Cannot delete a `hotel_services` item if active `service_orders` exist.
+     - Cannot delete a `shifts` template if active `staff_schedules` exist.
+     - Cannot delete an `inventory` item if historical `inventory_transactions` exist.
+
+3. **`ON DELETE SET NULL` (Preserves Audit History While Decoupling Actor):**
+   - Ensures immutable historical and accounting trails remain intact even if staff leave or accounts are deactivated:
+     - `checked_in_by`, `checked_out_by` in `bookings`.
+     - `recorded_by` in `payments`, `expenses`, `staff_attendance`, `inventory_transactions`.
+     - `changed_by` in `booking_status_history`, `room_status_history`.
+     - `assigned_employee_id` in `housekeeping_tasks`.
+     - `technician_id` in `maintenance_requests`.
+     - `department_id` in `employees`, `complaints`, `inventory_transactions`.
