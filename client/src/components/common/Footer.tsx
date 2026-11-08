@@ -1,5 +1,5 @@
 import React from 'react';
-import { Crown, ShieldCheck, Award, Heart } from 'lucide-react';
+import { Crown, ShieldCheck, Award, Heart, Send, Instagram, Phone, Mail, ExternalLink } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
 
@@ -32,6 +32,35 @@ export const Footer: React.FC = () => {
             <div className="text-[11px] text-amber-300 font-medium flex items-center gap-1.5">
               <Award className="w-3.5 h-3.5" />
               <span>{t('footer.hospitality_line', 'Authentic Ethiopian Hospitality • Bole, Addis Ababa')}</span>
+            </div>
+
+            {/* Direct Social & Messaging Links */}
+            <div className="pt-2 space-y-2">
+              <p className="text-[10px] uppercase tracking-wider font-bold text-slate-400">
+                {language === 'am' ? 'ቀጥታ መልእክትና ማህበራዊ ገፆች' : 'Direct Instant Chat & Social'}
+              </p>
+              <div className="flex items-center gap-2.5">
+                <a
+                  href={hotelSettings.hotel_telegram_link || 'https://t.me/Abuzubeir1234'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-xl bg-sky-950/80 hover:bg-sky-900 border border-sky-500/40 hover:border-sky-400 text-sky-400 hover:text-sky-300 flex items-center justify-center transition-all shadow-md hover:scale-105"
+                  title="Telegram"
+                  aria-label="Telegram"
+                >
+                  <Send className="w-4 h-4" />
+                </a>
+                <a
+                  href={hotelSettings.hotel_instagram_link || 'https://instagram.com/seyaman5825'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-xl bg-pink-950/80 hover:bg-pink-900 border border-pink-500/40 hover:border-pink-400 text-pink-400 hover:text-pink-300 flex items-center justify-center transition-all shadow-md hover:scale-105"
+                  title="Instagram"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="w-4 h-4" />
+                </a>
+              </div>
             </div>
           </div>
 
