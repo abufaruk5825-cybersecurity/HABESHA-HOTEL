@@ -76,7 +76,7 @@ export const AboutFaqContact: React.FC = () => {
                 src="/images/logo-hotel.png"
                 alt="HABESHA-HOTEL Logo"
                 onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src = '/images/logo hotel.png';
+                  (e.currentTarget as HTMLImageElement).src = '/images/logo-hotel.png';
                 }}
                 className="h-10 w-auto object-contain rounded-xl border border-amber-500/30 p-1 bg-slate-900/80 shadow-md"
               />
