@@ -330,3 +330,159 @@ export interface FinancialSummary {
   categoryBreakdown: { category: string; total: number; count: number }[];
   paymentMethodBreakdown: { payment_method: string; total: number; count: number }[];
 }
+
+export interface Refund {
+  id: number;
+  refund_number: string;
+  payment_id: number;
+  booking_id: number;
+  amount: number;
+  currency: string;
+  refund_method: string;
+  reason: string;
+  status: 'pending' | 'completed' | 'rejected';
+  processed_by?: number;
+  processed_by_name?: string;
+  payment_reference?: string;
+  booking_reference?: string;
+  customer_name?: string;
+  notes?: string;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface PaymentMethod {
+  id: number;
+  code: string;
+  name: string;
+  type: 'mobile_money' | 'bank_transfer' | 'card' | 'cash' | 'other';
+  currency: string;
+  is_active: boolean | number;
+  account_number?: string;
+  instructions?: string;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface Discount {
+  id: number;
+  code: string;
+  name: string;
+  discount_type: 'percentage' | 'fixed_amount';
+  value: number;
+  min_spend: number;
+  max_discount?: number;
+  valid_from: string;
+  valid_until: string;
+  max_uses: number;
+  current_uses: number;
+  is_active: boolean | number;
+  created_at: string;
+}
+
+export interface RoomStatusHistory {
+  id: number;
+  room_id: number;
+  previous_status: string;
+  new_status: string;
+  changed_by?: number;
+  reason?: string;
+  created_at: string;
+}
+
+export interface BookingStatusHistory {
+  id: number;
+  booking_id: number;
+  previous_status: string;
+  new_status: string;
+  changed_by?: number;
+  notes?: string;
+  created_at: string;
+}
+
+export interface Shift {
+  id: number;
+  name: string;
+  code: string;
+  start_time: string;
+  end_time: string;
+  description?: string;
+  created_at: string;
+}
+
+export interface StaffSchedule {
+  id: number;
+  employee_id: number;
+  employee_name?: string;
+  employee_code?: string;
+  avatar_url?: string;
+  position?: string;
+  department_name?: string;
+  shift_id: number;
+  shift_name?: string;
+  shift_code?: string;
+  start_time?: string;
+  end_time?: string;
+  department_id?: number;
+  work_date: string;
+  status: 'scheduled' | 'completed' | 'absent' | 'swapped' | 'cancelled';
+  notes?: string;
+  created_at: string;
+}
+
+export interface StaffAttendance {
+  id: number;
+  employee_id: number;
+  employee_name?: string;
+  employee_code?: string;
+  avatar_url?: string;
+  position?: string;
+  department_name?: string;
+  shift_name?: string;
+  schedule_id?: number;
+  attendance_date: string;
+  clock_in?: string;
+  clock_out?: string;
+  total_hours: number;
+  status: 'present' | 'late' | 'absent' | 'half_day' | 'on_leave';
+  notes?: string;
+  recorded_by?: number;
+  created_at: string;
+}
+
+export interface InventoryItem {
+  id: number;
+  item_code: string;
+  name: string;
+  category: 'linen' | 'toiletries' | 'food_beverage' | 'cleaning_supplies' | 'maintenance_parts' | 'stationery' | 'other';
+  unit: string;
+  quantity_on_hand: number;
+  reorder_level: number;
+  unit_cost: number;
+  currency: string;
+  storage_location: string;
+  is_active: boolean | number;
+  is_low_stock?: boolean | number;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface InventoryTransaction {
+  id: number;
+  inventory_id: number;
+  item_name?: string;
+  item_code?: string;
+  unit?: string;
+  transaction_type: 'purchase_in' | 'usage_out' | 'waste_loss' | 'return_in' | 'adjustment';
+  quantity: number;
+  unit_price: number;
+  total_cost: number;
+  department_id?: number;
+  department_name?: string;
+  reference_type?: string;
+  reference_id?: number;
+  notes?: string;
+  recorded_by?: number;
+  recorded_by_name?: string;
+  created_at: string;
+}
