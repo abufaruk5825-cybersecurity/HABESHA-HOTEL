@@ -28,7 +28,9 @@ import {
   ChevronDown,
   Info,
   MapPin,
-  LogIn
+  LogIn,
+  Send,
+  Instagram
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -45,7 +47,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenAuthModal,
 }) => {
   const { user, logout, notifications, unreadCount, markNotificationRead, hotelSettings } = useAuth();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [showNotifMenu, setShowNotifMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('home');
@@ -157,6 +159,29 @@ export const Navbar: React.FC<NavbarProps> = ({
               <PhoneCall className="w-3 h-3 text-slate-400" />
               <span>{hotelSettings.hotel_phone || '+251 11 667 8000'}</span>
             </a>
+            <span className="hidden md:inline text-slate-700">|</span>
+            <div className="flex items-center gap-1.5">
+              <a
+                href={hotelSettings.hotel_telegram_link || 'https://t.me/Abuzubeir1234'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-6 h-6 rounded-full bg-sky-500/10 hover:bg-sky-500/25 text-sky-400 hover:text-sky-300 flex items-center justify-center transition-all shadow-sm"
+                title="Telegram"
+                aria-label="Telegram"
+              >
+                <Send className="w-3 h-3" />
+              </a>
+              <a
+                href={hotelSettings.hotel_instagram_link || 'https://instagram.com/seyaman5825'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-6 h-6 rounded-full bg-pink-500/10 hover:bg-pink-500/25 text-pink-400 hover:text-pink-300 flex items-center justify-center transition-all shadow-sm"
+                title="Instagram"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-3 h-3" />
+              </a>
+            </div>
           </div>
 
           <div className="flex items-center gap-3">
@@ -351,6 +376,33 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <Mail className="w-4 h-4 text-amber-400" />
                   <span>{t('nav.contact', 'Contact & Location')}</span>
                 </button>
+                <div className="px-4 py-2.5 border-t border-slate-800/80 flex items-center justify-between">
+                  <span className="text-[11px] text-slate-400 font-medium">
+                    {language === 'am' ? 'ቀጥታ መልእክት' : 'Direct Instant Chat'}
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <a
+                      href={hotelSettings.hotel_telegram_link || 'https://t.me/Abuzubeir1234'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-7 h-7 rounded-lg bg-sky-950 border border-sky-500/40 text-sky-400 hover:text-sky-300 hover:bg-sky-900 flex items-center justify-center transition-colors shadow-sm"
+                      title="Telegram"
+                      aria-label="Telegram"
+                    >
+                      <Send className="w-3.5 h-3.5" />
+                    </a>
+                    <a
+                      href={hotelSettings.hotel_instagram_link || 'https://instagram.com/seyaman5825'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-7 h-7 rounded-lg bg-pink-950 border border-pink-500/40 text-pink-400 hover:text-pink-300 hover:bg-pink-900 flex items-center justify-center transition-colors shadow-sm"
+                      title="Instagram"
+                      aria-label="Instagram"
+                    >
+                      <Instagram className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -613,6 +665,30 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Mail className="w-4 h-4 text-amber-400" />
               <span>{t('nav.contact', 'Contact Us')}</span>
             </button>
+
+            {/* Mobile Direct Social Channels - Icon Only */}
+            <div className="flex items-center justify-center gap-3 pt-2">
+              <a
+                href={hotelSettings.hotel_telegram_link || 'https://t.me/Abuzubeir1234'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-xl bg-sky-950/80 border border-sky-500/40 text-sky-400 hover:text-sky-300 flex items-center justify-center shadow-md transition-all"
+                title="Telegram"
+                aria-label="Telegram"
+              >
+                <Send className="w-4 h-4" />
+              </a>
+              <a
+                href={hotelSettings.hotel_instagram_link || 'https://instagram.com/seyaman5825'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-xl bg-pink-950/80 border border-pink-500/40 text-pink-400 hover:text-pink-300 flex items-center justify-center shadow-md transition-all"
+                title="Instagram"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-4 h-4" />
+              </a>
+            </div>
           </div>
 
           {/* Quick Action Buttons in Mobile Drawer */}
