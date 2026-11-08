@@ -26,7 +26,7 @@ export const Footer: React.FC<FooterProps> = ({
                 src="/images/logo-hotel.png"
                 alt="HABESHA-HOTEL Logo"
                 onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src = '/images/logo hotel.png';
+                  (e.currentTarget as HTMLImageElement).src = '/images/logo-hotel.png';
                 }}
                 className="h-10 w-auto object-contain rounded-lg shadow-md"
               />
